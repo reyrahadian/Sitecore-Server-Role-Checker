@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -37,6 +38,12 @@ namespace SC.ServerRoleChecker.UI
 
 		private void btnAnalyze_Click(object sender, RoutedEventArgs e)
 		{
+			if (_websiteFolderDirectoryInfo == null)
+			{
+				MessageBox.Show(this, "Please select the website folder");
+				return;
+			}
+
 			ParseCsv();
 			_websiteFolderDirectoryInfo.Refresh();
 			if (_websiteFolderDirectoryInfo.Exists)
@@ -71,14 +78,12 @@ namespace SC.ServerRoleChecker.UI
 		private string GetCsvFilePath()
 		{
 			if (rb81.IsChecked.GetValueOrDefault())
-			{
-				return System.AppDomain.CurrentDomain.BaseDirectory + "configurations/Config_Enable-Disable_Sitecore_8.1_upd3.csv";
-			}
+				return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config_Enable-Disable_Sitecore_8.1_upd3.csv";
 
-			return System.AppDomain.CurrentDomain.BaseDirectory + "configurations/Config Enable-Disable Sitecore_8.2-160906.csv";
+			return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config Enable-Disable Sitecore_8.2-160906.csv";
 		}
 
-		private IEnumerable<ServerRoleType> GetSelectedRoles()
+		private List<ServerRoleType> GetSelectedRoles()
 		{
 			var roles = new List<ServerRoleType>();
 			if (cbCD.IsChecked.GetValueOrDefault())
@@ -162,11 +167,11 @@ namespace SC.ServerRoleChecker.UI
 			if (string.IsNullOrWhiteSpace(configFileName))
 				return string.Empty;
 
-			var pos = configFileName.IndexOf(".config");
+			var pos = configFileName.IndexOf(".config", StringComparison.Ordinal);
 			return configFileName.Substring(0, pos + 7);
 		}
 
-		private void DisplayResultInGridView(IEnumerable<ServerRoleType> selectedRoles)
+		private void DisplayResultInGridView(List<ServerRoleType> selectedRoles)
 		{
 			var gridRows = new List<GridResult>();
 
@@ -179,30 +184,6 @@ namespace SC.ServerRoleChecker.UI
 				});
 
 			dataGrid.ItemsSource = gridRows.OrderByDescending(x => x.IsValid);
-		}
-
-		private void RbSitecoreVersion_Click(object sender, RoutedEventArgs e)
-		{
-			if (rb81.IsChecked.GetValueOrDefault())
-			{
-				rb82.IsChecked = false;
-			}
-			else if (rb82.IsChecked.GetValueOrDefault())
-			{
-				rb81.IsChecked = false;
-			}
-		}
-
-		private void RbSearchProvider_Click(object sender, RoutedEventArgs e)
-		{
-			if (rbLucene.IsChecked.GetValueOrDefault())
-			{
-				rbSOLR.IsChecked = false;
-			}
-			else if (rbSOLR.IsChecked.GetValueOrDefault())
-			{
-				rbLucene.IsChecked = false;
-			}
 		}
 	}
 }
