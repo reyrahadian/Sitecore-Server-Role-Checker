@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -7,6 +8,7 @@ using System.Windows.Forms;
 using CsvHelper;
 using SC.ServerRoleChecker.Core;
 using SC.ServerRoleChecker.Core.Enums;
+using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
 
 namespace SC.ServerRoleChecker.UI
@@ -22,7 +24,7 @@ namespace SC.ServerRoleChecker.UI
 		public MainWindow()
 		{
 			InitializeComponent();
-		}
+		}		
 
 		private void btnBrowseWebsiteFolder_Click(object sender, RoutedEventArgs e)
 		{
@@ -47,20 +49,28 @@ namespace SC.ServerRoleChecker.UI
 			ParseCsv();
 			_websiteFolderDirectoryInfo.Refresh();
 			if (_websiteFolderDirectoryInfo.Exists)
-			{
-				var selectedRoles = GetSelectedRoles();
-				foreach (var configurationItem in _configurationItems)
+				try
 				{
-					var file = _websiteFolderDirectoryInfo.GetFiles(configurationItem.ConfigFileName + "*").FirstOrDefault();
-					if (file == null)
-						file = FindFile(_websiteFolderDirectoryInfo.GetDirectories("App_Config/include").Single(),
-							configurationItem.ConfigFileName);
-					var searchProviderType = GetSelectedSearchProviderType();
-					CheckConfiguration(file, configurationItem, selectedRoles, searchProviderType);
-				}
+					var selectedRoles = GetSelectedRoles();
+					foreach (var configurationItem in _configurationItems)
+					{
+						var file = _websiteFolderDirectoryInfo.GetFiles(configurationItem.ConfigFileName + "*").FirstOrDefault();
+						if (file == null)
+						{
+							var configFileName = SanitizeConfigFileName(configurationItem.ConfigFileName);
+							file = FindFile(_websiteFolderDirectoryInfo.GetDirectories("App_Config/include").Single(),
+								configFileName + "*");
+							var searchProviderType = GetSelectedSearchProviderType();
+							CheckConfiguration(file, configurationItem, selectedRoles, searchProviderType);
+						}
+					}
 
-				DisplayResultInGridView(selectedRoles);
-			}
+					DisplayResultInGridView(selectedRoles);
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(this, ex.Message);
+				}
 			else
 				MessageBox.Show(this, "Website folder path invalid");
 		}
@@ -146,6 +156,7 @@ namespace SC.ServerRoleChecker.UI
 					}
 					else
 					{
+						configurationItem.ConfigFileName = configFile.Name;
 						if (configFile.Extension == ".config")
 							configurationItem.SetResult(ConfigFileResult.IsValid);
 						else
@@ -154,10 +165,20 @@ namespace SC.ServerRoleChecker.UI
 				}
 				else
 				{
-					if (!configFile.Exists || (configFile.Extension != ".config"))
+					if (!configFile.Exists)
+					{
 						configurationItem.SetResult(ConfigFileResult.IsValid);
+					}
+					else if (configFile.Extension != ".config")
+					{
+						configurationItem.ConfigFileName = configFile.Name;
+						configurationItem.SetResult(ConfigFileResult.IsValid);
+					}
 					else
+					{
+						configurationItem.ConfigFileName = configFile.Name;
 						configurationItem.SetResult(ConfigFileResult.NotValid);
+					}
 				}
 			}
 		}
@@ -173,7 +194,7 @@ namespace SC.ServerRoleChecker.UI
 
 		private void DisplayResultInGridView(List<ServerRoleType> selectedRoles)
 		{
-			var gridRows = new List<GridResult>();
+			var gridRows = new List<GridResult>();			
 
 			foreach (var configurationItem in _configurationItems)
 				gridRows.Add(new GridResult
@@ -184,6 +205,19 @@ namespace SC.ServerRoleChecker.UI
 				});
 
 			dataGrid.ItemsSource = gridRows.OrderByDescending(x => x.IsValid);
+		}
+
+		private void ButtonToggle_OnClick(object sender, RoutedEventArgs e)
+		{
+			var button = (Button) sender;
+			var configFileName = button.CommandParameter;
+			var file = FindFile(_websiteFolderDirectoryInfo.GetDirectories("App_Config/include").Single(), configFileName + "*");
+			if (button.Content.ToString() == "Enable")
+				file.MoveTo(SanitizeConfigFileName(file.FullName));
+			else
+				file.MoveTo(file.FullName + ".disabled");
+
+			btnAnalyze_Click(sender, e);
 		}
 	}
 }

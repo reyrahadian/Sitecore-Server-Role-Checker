@@ -5,33 +5,70 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SC.ServerRoleChecker.UI"
         mc:Ignorable="d"
-        Title="Sitecore Server Role Checker" Height="600" Width="1024">
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="350">
-			</ColumnDefinition>
-			<ColumnDefinition Width="*">
-			</ColumnDefinition>
-		</Grid.ColumnDefinitions>
-		<Grid Grid.Column="0">
-			<RadioButton x:Name="rbLucene" Content="Lucene" HorizontalAlignment="Left" Margin="179,46,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scSearchProvider"/>
-			<RadioButton x:Name="rbSOLR" Content="SOLR" HorizontalAlignment="Left" Margin="256,46,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
-			<RadioButton x:Name="rb81" Content="8.1" HorizontalAlignment="Left" Margin="179,14,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scVersion"/>
-			<RadioButton x:Name="rb82" Content="8.2" HorizontalAlignment="Left" Margin="256,14,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
-			<Button x:Name="btnAnalyze" Content="Analyze" HorizontalAlignment="Left" Margin="179,239,0,0" VerticalAlignment="Top" Width="75" Click="btnAnalyze_Click"/>
-			<TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Text="Sitecore Version"/>
-			<Button x:Name="btnBrowseWebsiteFolder" Content="Browse" HorizontalAlignment="Left" Margin="179,80,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowseWebsiteFolder_Click"/>
-			<TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,80,0,0" TextWrapping="Wrap" Text="Website Folder Path" VerticalAlignment="Top"/>
-			<TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" Margin="10,45,0,0" TextWrapping="Wrap" Text="Search Engine Provider" VerticalAlignment="Top"/>
-			<TextBlock x:Name="textWebsiteFolderPath" HorizontalAlignment="Left" Margin="10,101,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top"/>
-			<CheckBox x:Name="cbCD" Content="Content Delivery" HorizontalAlignment="Left" Margin="179,144,0,0" VerticalAlignment="Top"/>
-			<CheckBox x:Name="cbCM" Content="Content Management" HorizontalAlignment="Left" Margin="179,164,0,0" VerticalAlignment="Top"/>
-			<CheckBox x:Name="cbProcessing" Content="Processing" HorizontalAlignment="Left" Margin="179,184,0,0" VerticalAlignment="Top"/>
-			<CheckBox x:Name="cbReportingService" Content="Reporting Service" HorizontalAlignment="Left" Margin="179,204,0,0" VerticalAlignment="Top"/>
-			<TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="10,140,0,0" TextWrapping="Wrap" Text="Dedicated Role" VerticalAlignment="Top"/>
+        Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="520.667">
+	<DockPanel Background="White">
+		<Grid DockPanel.Dock="Top">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*">
+				</ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid Grid.Column="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="278*"/>
+					<ColumnDefinition Width="282*"/>
+					<ColumnDefinition Width="83*"/>
+				</Grid.ColumnDefinitions>
+				<RadioButton x:Name="rbLucene" Content="Lucene" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scSearchProvider"/>
+				<RadioButton x:Name="rbSOLR" Content="SOLR" HorizontalAlignment="Left" Margin="84,85,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
+				<RadioButton x:Name="rb81" Content="8.1" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scVersion"/>
+				<RadioButton x:Name="rb82" Content="8.2" HorizontalAlignment="Left" Margin="63,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
+				<Button x:Name="btnAnalyze" Content="Analyze" HorizontalAlignment="Left" Margin="6,166,0,-0.333" VerticalAlignment="Top" Width="75" Click="btnAnalyze_Click" Grid.Column="1"/>
+				<TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Text="Sitecore Version"/>
+				<Button x:Name="btnBrowseWebsiteFolder" Content="Browse" HorizontalAlignment="Left" Margin="140,120,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowseWebsiteFolder_Click" RenderTransformOrigin="-0.213,0.79"/>
+				<TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,120,0,0" TextWrapping="Wrap" Text="Website Folder Path" VerticalAlignment="Top"/>
+				<TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" Margin="10,63,0,0" TextWrapping="Wrap" Text="Search Engine Provider" VerticalAlignment="Top"/>
+				<TextBlock x:Name="textWebsiteFolderPath" HorizontalAlignment="Left" Margin="10,142,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top"/>
+
+				<CheckBox x:Name="cbCD" Content="Content Delivery" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="63,53,0,0" Grid.Column="1"/>
+				<CheckBox x:Name="cbCM" Content="Content Management" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="63,32,0,0" Grid.Column="1"/>
+				<CheckBox x:Name="cbProcessing" Content="Processing" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="63,74,0,0" Grid.Column="1"/>
+				<CheckBox x:Name="cbReportingService" Content="Reporting Service" HorizontalAlignment="Left" Margin="63,95,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+				<TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="48,10,0,0" TextWrapping="Wrap" Text="Dedicated Role" VerticalAlignment="Top" Grid.Column="1"/>
+			</Grid>
 		</Grid>
-		<DockPanel Grid.Column="1">
-			<DataGrid x:Name="dataGrid" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-		</DockPanel>
-	</Grid>
+		<Grid DockPanel.Dock="Bottom">
+			<DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="File Name" Binding="{Binding ConfigFileName}"></DataGridTextColumn>
+					<DataGridTextColumn Header="Action" Binding="{Binding StatusText}"></DataGridTextColumn >
+					<DataGridTemplateColumn Header="Status" CanUserReorder="True">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Image Source="{Binding ConfigFileResultImage}" Height="15" Width="15" ToolTip="{Binding ConfigResultImageToolTip}"></Image>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTemplateColumn>
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Button Content="{Binding ButtonToggleText}" Click="ButtonToggle_OnClick" CommandParameter="{Binding ConfigFileName}"></Button>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+				</DataGrid.Columns>
+				<DataGrid.RowStyle>
+					<Style TargetType="DataGridRow">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding IsValid}" Value="NotValid">
+								<Setter Property="Background" Value="Wheat"></Setter>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</DataGrid.RowStyle>
+			</DataGrid>
+		</Grid>
+	</DockPanel>
 </Window>
+
+
+
