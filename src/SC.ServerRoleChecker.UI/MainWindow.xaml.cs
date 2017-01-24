@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using CsvHelper;
+using MahApps.Metro.Controls;
 using SC.ServerRoleChecker.Core;
 using SC.ServerRoleChecker.Core.Enums;
 using Button = System.Windows.Controls.Button;
@@ -15,7 +16,7 @@ namespace SC.ServerRoleChecker.UI
 	/// <summary>
 	///   Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class MainWindow
 	{
 		private List<ConfigItem> _configurationItems;
 		private DirectoryInfo _websiteFolderDirectoryInfo;
@@ -51,6 +52,11 @@ namespace SC.ServerRoleChecker.UI
 				try
 				{
 					var selectedRoles = GetSelectedRoles();
+					if (!selectedRoles.Any())
+					{
+						MessageBox.Show(this, "Please select a role");
+						return;
+					}
 					foreach (var configurationItem in _configurationItems)
 					{
 						var file = _websiteFolderDirectoryInfo.GetFiles(configurationItem.ConfigFileName + "*").FirstOrDefault();
@@ -71,7 +77,7 @@ namespace SC.ServerRoleChecker.UI
 					MessageBox.Show(this, ex.Message);
 				}
 			else
-				MessageBox.Show(this, "Website folder path invalid");
+				MessageBox.Show(this, "Invalid website folder path ");
 		}
 
 		private void ParseCsv()
