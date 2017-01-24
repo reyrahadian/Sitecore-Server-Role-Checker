@@ -3,6 +3,7 @@
 	public enum SearchProviderType
 	{
 		Lucene,
-		SOLR
+		SOLR,
+		Azure
 	}
 }

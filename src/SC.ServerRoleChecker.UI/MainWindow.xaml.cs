@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -24,7 +23,7 @@ namespace SC.ServerRoleChecker.UI
 		public MainWindow()
 		{
 			InitializeComponent();
-		}		
+		}
 
 		private void btnBrowseWebsiteFolder_Click(object sender, RoutedEventArgs e)
 		{
@@ -87,10 +86,19 @@ namespace SC.ServerRoleChecker.UI
 
 		private string GetCsvFilePath()
 		{
-			if (rb81.IsChecked.GetValueOrDefault())
+			if (rb81u3.IsChecked.GetValueOrDefault())
 				return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config_Enable-Disable_Sitecore_8.1_upd3.csv";
 
-			return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config Enable-Disable Sitecore_8.2-160906.csv";
+			if (rb82.IsChecked.GetValueOrDefault())
+				return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config Enable-Disable Sitecore_8.2-160906.csv";
+
+			if (rb82u1.IsChecked.GetValueOrDefault())
+				return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config Enable-Disable Sitecore_8.2 Update1.csv";
+
+			if (rb82u2.IsChecked.GetValueOrDefault())
+				return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config Enable-Disable Sitecore_8.2 Update2.csv";
+
+			throw new Exception("There's no Sitecore version selected");
 		}
 
 		private List<ServerRoleType> GetSelectedRoles()
@@ -115,6 +123,9 @@ namespace SC.ServerRoleChecker.UI
 
 			if (rbSOLR.IsChecked.GetValueOrDefault())
 				return SearchProviderType.SOLR;
+
+			if (rbAzure.IsChecked.GetValueOrDefault())
+				return SearchProviderType.Azure;
 
 			return SearchProviderType.Lucene;
 		}
@@ -194,7 +205,7 @@ namespace SC.ServerRoleChecker.UI
 
 		private void DisplayResultInGridView(List<ServerRoleType> selectedRoles)
 		{
-			var gridRows = new List<GridResult>();			
+			var gridRows = new List<GridResult>();
 
 			foreach (var configurationItem in _configurationItems)
 				gridRows.Add(new GridResult

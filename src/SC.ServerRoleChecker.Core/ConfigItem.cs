@@ -20,22 +20,41 @@ namespace SC.ServerRoleChecker.Core
 		public ConfigFileResult Result { get; private set; }
 
 		public ConfigFileStatus HasToBeEnabledOrDisabled(IEnumerable<ServerRoleType> roles, SearchProviderType searchProvider)
+		{			
+			if (!string.IsNullOrWhiteSpace(SearchProviderUsed) &&
+			    (SearchProviderUsed.ToLower().Contains("lucene") || SearchProviderUsed.ToLower().Contains("solr") ||
+			     SearchProviderUsed.ToLower().Contains("azure")))
+			{
+				if (searchProvider == SearchProviderType.Lucene)
+				{
+					if (SearchProviderUsed.ToLower().Contains("solr") || SearchProviderUsed.ToLower().Contains("azure"))
+						return ConfigFileStatus.HasToBeDisabled;
+
+					return GetConfigFileStatusBasedOnRoles(roles);
+				}
+
+				if (searchProvider == SearchProviderType.SOLR)
+				{
+					if (SearchProviderUsed.ToLower().Contains("lucene") || SearchProviderUsed.ToLower().Contains("azure"))
+						return ConfigFileStatus.HasToBeDisabled;
+
+					return GetConfigFileStatusBasedOnRoles(roles);
+				}
+
+				if (searchProvider == SearchProviderType.Azure)
+				{
+					if (SearchProviderUsed.ToLower().Contains("lucene") || SearchProviderUsed.ToLower().Contains("solr"))
+						return ConfigFileStatus.HasToBeDisabled;
+
+					return GetConfigFileStatusBasedOnRoles(roles);
+				}
+			}
+
+			return GetConfigFileStatusBasedOnRoles(roles);			
+		}
+
+		private ConfigFileStatus GetConfigFileStatusBasedOnRoles(IEnumerable<ServerRoleType> roles)
 		{
-			var result = ConfigFileStatus.HasToBeDisabled;
-			if (SearchProviderUsed.ToLower().Contains("lucene") && searchProvider == SearchProviderType.SOLR)
-			{
-				if (ConfigFileName.ToLower().Contains("solr")) 
-					return ConfigFileStatus.HasToBeEnabled;
-				return ConfigFileStatus.HasToBeDisabled;
-			}
-
-			if (SearchProviderUsed.ToLower().Contains("solr") && searchProvider == SearchProviderType.Lucene)
-			{
-				if (ConfigFileName.ToLower().Contains("lucene"))
-					return ConfigFileStatus.HasToBeEnabled;
-				return ConfigFileStatus.HasToBeDisabled;
-			}
-
 			if (roles.Contains(ServerRoleType.CD))
 				if (ContentDelivery == ENABLE_TEXT)
 					return ConfigFileStatus.HasToBeEnabled;
@@ -49,7 +68,7 @@ namespace SC.ServerRoleChecker.Core
 				if (ReportingService == ENABLE_TEXT)
 					return ConfigFileStatus.HasToBeEnabled;
 
-			return result;
+			return ConfigFileStatus.HasToBeDisabled;
 		}
 
 		public void SetResult(ConfigFileResult result)

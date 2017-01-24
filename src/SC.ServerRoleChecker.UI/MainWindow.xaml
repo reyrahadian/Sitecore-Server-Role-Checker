@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SC.ServerRoleChecker.UI"
         mc:Ignorable="d"
-        Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="520.667">
+        Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="661.334">
 	<DockPanel Background="White">
 		<Grid DockPanel.Dock="Top">
 			<Grid.ColumnDefinitions>
@@ -19,9 +19,12 @@
 					<ColumnDefinition Width="83*"/>
 				</Grid.ColumnDefinitions>
 				<RadioButton x:Name="rbLucene" Content="Lucene" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scSearchProvider"/>
+				<RadioButton x:Name="rbAzure" Content="Azure" HorizontalAlignment="Left" Margin="152,85,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
 				<RadioButton x:Name="rbSOLR" Content="SOLR" HorizontalAlignment="Left" Margin="84,85,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
-				<RadioButton x:Name="rb81" Content="8.1" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scVersion"/>
-				<RadioButton x:Name="rb82" Content="8.2" HorizontalAlignment="Left" Margin="63,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
+				<RadioButton x:Name="rb81u3" Content="8.1u3" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scVersion"/>
+				<RadioButton x:Name="rb82" Content="8.2" HorizontalAlignment="Left" Margin="72,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
+				<RadioButton x:Name="rb82u1" Content="8.2u1" HorizontalAlignment="Left" Margin="126,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
+				<RadioButton x:Name="rb82u2" Content="8.2u2" HorizontalAlignment="Left" Margin="187,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
 				<Button x:Name="btnAnalyze" Content="Analyze" HorizontalAlignment="Left" Margin="6,166,0,-0.333" VerticalAlignment="Top" Width="75" Click="btnAnalyze_Click" Grid.Column="1"/>
 				<TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Text="Sitecore Version"/>
 				<Button x:Name="btnBrowseWebsiteFolder" Content="Browse" HorizontalAlignment="Left" Margin="140,120,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowseWebsiteFolder_Click" RenderTransformOrigin="-0.213,0.79"/>
