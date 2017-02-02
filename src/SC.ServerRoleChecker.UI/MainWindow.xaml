@@ -6,7 +6,7 @@
 				xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:SC.ServerRoleChecker.UI"
         mc:Ignorable="d"
-        Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="720.667">
+        Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="942" Height="630.717">
 	<DockPanel Background="White">
 		<Grid DockPanel.Dock="Top">
 			<Grid.ColumnDefinitions>
@@ -42,8 +42,8 @@
 		<Grid DockPanel.Dock="Bottom">
 			<DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="File Name" Binding="{Binding ConfigFileName}"></DataGridTextColumn>
-					<DataGridTextColumn Header="Action" Binding="{Binding StatusText}"></DataGridTextColumn >
+					<DataGridTextColumn Header="File Name" Binding="{Binding ConfigFileFullPath}"></DataGridTextColumn>
+					<DataGridTextColumn Header="Action" Binding="{Binding StatusText}" IsReadOnly="True"></DataGridTextColumn >
 					<DataGridTemplateColumn Header="Status" CanUserReorder="True">
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
@@ -54,7 +54,7 @@
 					<DataGridTemplateColumn>
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
-								<Button Content="{Binding ButtonToggleText}" Click="ButtonToggle_OnClick" CommandParameter="{Binding ConfigFileName}"></Button>
+								<Button Content="{Binding ButtonToggleText}" Click="ButtonToggle_OnClick" CommandParameter="{Binding}" Visibility="{Binding ToggleButtonVisible}"></Button>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 					</DataGridTemplateColumn>
@@ -62,7 +62,7 @@
 				<DataGrid.RowStyle>
 					<Style TargetType="DataGridRow">
 						<Style.Triggers>
-							<DataTrigger Binding="{Binding IsValid}" Value="NotValid">
+							<DataTrigger Binding="{Binding Result}" Value="NotValid">
 								<Setter Property="Background" Value="Wheat"></Setter>
 							</DataTrigger>
 						</Style.Triggers>

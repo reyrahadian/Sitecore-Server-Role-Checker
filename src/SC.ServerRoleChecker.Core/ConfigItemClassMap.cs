@@ -7,8 +7,8 @@ namespace SC.ServerRoleChecker.Core
 		public ConfigItemClassMap()
 		{
 			Map(x => x.ProductName).Index(0);
-			Map(x => x.FilePath).Index(1);
-			Map(x => x.ConfigFileName).Index(2);
+			Map(x => x.DirectoryPath).Index(1);
+			Map(x => x.FileName).Index(2);
 			Map(x => x.Type).Index(3);
 			Map(x => x.SearchProviderUsed).Index(4);
 			Map(x => x.ContentDelivery).Index(5);

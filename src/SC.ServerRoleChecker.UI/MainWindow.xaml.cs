@@ -5,236 +5,226 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using CsvHelper;
-using MahApps.Metro.Controls;
 using SC.ServerRoleChecker.Core;
 using SC.ServerRoleChecker.Core.Enums;
+using SC.ServerRoleChecker.Core.Extensions;
+using SC.ServerRoleChecker.Core.Validators;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
 
 namespace SC.ServerRoleChecker.UI
 {
-	/// <summary>
-	///   Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow
-	{
-		private List<ConfigItem> _configurationItems;
-		private DirectoryInfo _websiteFolderDirectoryInfo;
+    /// <summary>
+    ///     Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow
+    {
+        private List<ConfigItem> _configurationItems;
+        private DirectoryInfo _websiteFolderDirectoryInfo;
 
-		public MainWindow()
-		{
-			InitializeComponent();
-		}
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
 
-		private void btnBrowseWebsiteFolder_Click(object sender, RoutedEventArgs e)
-		{
-			var dialog = new FolderBrowserDialog();
-			var result = dialog.ShowDialog();
+        private List<ServerRoleType> SelectedRoles
+        {
+            get
+            {
+                var roles = new List<ServerRoleType>();
+                if (cbCD.IsChecked.GetValueOrDefault())
+                    roles.Add(ServerRoleType.CD);
+                if (cbCM.IsChecked.GetValueOrDefault())
+                    roles.Add(ServerRoleType.CM);
+                if (cbProcessing.IsChecked.GetValueOrDefault())
+                    roles.Add(ServerRoleType.Processing);
+                if (cbReportingService.IsChecked.GetValueOrDefault())
+                    roles.Add(ServerRoleType.ReportingService);
 
-			if (result == System.Windows.Forms.DialogResult.OK)
-			{
-				_websiteFolderDirectoryInfo = new DirectoryInfo(dialog.SelectedPath);
-				textWebsiteFolderPath.Text = dialog.SelectedPath;
-			}
-		}
+                return roles;
+            }
+        }
 
-		private void btnAnalyze_Click(object sender, RoutedEventArgs e)
-		{
-			if (_websiteFolderDirectoryInfo == null)
-			{
-				MessageBox.Show(this, "Please select the website folder");
-				return;
-			}
+        private SearchProviderType SelectedSearchProviderType
+        {
+            get
+            {
+                if (rbLucene.IsChecked.GetValueOrDefault())
+                    return SearchProviderType.Lucene;
 
-			ParseCsv();
-			_websiteFolderDirectoryInfo.Refresh();
-			if (_websiteFolderDirectoryInfo.Exists)
-				try
-				{
-					var selectedRoles = GetSelectedRoles();
-					if (!selectedRoles.Any())
-					{
-						MessageBox.Show(this, "Please select a role");
-						return;
-					}
-					foreach (var configurationItem in _configurationItems)
-					{
-						var file = _websiteFolderDirectoryInfo.GetFiles(configurationItem.ConfigFileName + "*").FirstOrDefault();
-						if (file == null)
-						{
-							var configFileName = SanitizeConfigFileName(configurationItem.ConfigFileName);
-							file = FindFile(_websiteFolderDirectoryInfo.GetDirectories("App_Config/include").Single(),
-								configFileName + "*");
-							var searchProviderType = GetSelectedSearchProviderType();
-							CheckConfiguration(file, configurationItem, selectedRoles, searchProviderType);
-						}
-					}
+                if (rbSOLR.IsChecked.GetValueOrDefault())
+                    return SearchProviderType.SOLR;
 
-					DisplayResultInGridView(selectedRoles);
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(this, ex.Message);
-				}
-			else
-				MessageBox.Show(this, "Invalid website folder path ");
-		}
+                if (rbAzure.IsChecked.GetValueOrDefault())
+                    return SearchProviderType.Azure;
 
-		private void ParseCsv()
-		{
-			var csvFilePath = GetCsvFilePath();
-			var sr = new StreamReader(csvFilePath);
-			var csv = new CsvReader(sr);
-			csv.Configuration.HasHeaderRecord = true;
-			csv.Configuration.RegisterClassMap<ConfigItemClassMap>();
-			_configurationItems = csv.GetRecords<ConfigItem>().ToList();
-		}
+                return SearchProviderType.Lucene;
+            }
+        }
 
-		private string GetCsvFilePath()
-		{
-			if (rb81u3.IsChecked.GetValueOrDefault())
-				return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config_Enable-Disable_Sitecore_8.1_upd3.csv";
+        private void btnBrowseWebsiteFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new FolderBrowserDialog();
+            var result = dialog.ShowDialog();
 
-			if (rb82.IsChecked.GetValueOrDefault())
-				return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config Enable-Disable Sitecore_8.2-160906.csv";
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                _websiteFolderDirectoryInfo = new DirectoryInfo(dialog.SelectedPath);
+                textWebsiteFolderPath.Text = dialog.SelectedPath;
+            }
+        }
 
-			if (rb82u1.IsChecked.GetValueOrDefault())
-				return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config Enable-Disable Sitecore_8.2 Update1.csv";
+        private void btnAnalyze_Click(object sender, RoutedEventArgs e)
+        {
+            if (_websiteFolderDirectoryInfo == null)
+            {
+                MessageBox.Show(this, "Please select the website folder");
+                return;
+            }
 
-			if (rb82u2.IsChecked.GetValueOrDefault())
-				return AppDomain.CurrentDomain.BaseDirectory + "configurations/Config Enable-Disable Sitecore_8.2 Update2.csv";
+            ParseCsv();
+            _websiteFolderDirectoryInfo.Refresh();
+            if (_websiteFolderDirectoryInfo.Exists)
+                try
+                {
+                    if (!SelectedRoles.Any())
+                    {
+                        MessageBox.Show(this, "Please select a role");
+                        return;
+                    }
+                    foreach (var configurationItem in _configurationItems)
+                    {
+                        var filePath = StripWebsitePath(configurationItem.FileFullPath).ToSanitizedConfigFileName();
+                        FileInfo file = null;
+                        try
+                        {
+                            var files = _websiteFolderDirectoryInfo.GetFiles(filePath + "*");
+                            file = files.FirstOrDefault();
+                        }
+                        catch (Exception)
+                        {
+                            //suppress file not found                            
+                        }
+                        
 
-			throw new Exception("There's no Sitecore version selected");
-		}
+                        CheckFileConfiguration(file, configurationItem);
+                    }
 
-		private List<ServerRoleType> GetSelectedRoles()
-		{
-			var roles = new List<ServerRoleType>();
-			if (cbCD.IsChecked.GetValueOrDefault())
-				roles.Add(ServerRoleType.CD);
-			if (cbCM.IsChecked.GetValueOrDefault())
-				roles.Add(ServerRoleType.CM);
-			if (cbProcessing.IsChecked.GetValueOrDefault())
-				roles.Add(ServerRoleType.Processing);
-			if (cbReportingService.IsChecked.GetValueOrDefault())
-				roles.Add(ServerRoleType.ReportingService);
+                    DisplayResultInGridView();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message);
+                }
+            else
+                MessageBox.Show(this, "Invalid website folder path ");
+        }
 
-			return roles;
-		}
+        private void ParseCsv()
+        {
+            var csvFilePath = GetCsvFilePath();
+            var sr = new StreamReader(csvFilePath);
+            var csv = new CsvReader(sr);
+            csv.Configuration.HasHeaderRecord = true;
+            csv.Configuration.RegisterClassMap<ConfigItemClassMap>();
+            _configurationItems = csv.GetRecords<ConfigItem>().ToList();
+        }
 
-		private SearchProviderType GetSelectedSearchProviderType()
-		{
-			if (rbLucene.IsChecked.GetValueOrDefault())
-				return SearchProviderType.Lucene;
+        private string GetCsvFilePath()
+        {
+            if (rb81u3.IsChecked.GetValueOrDefault())
+                return AppDomain.CurrentDomain.BaseDirectory +
+                       "configurations/Config_Enable-Disable_Sitecore_8.1_upd3.csv";
 
-			if (rbSOLR.IsChecked.GetValueOrDefault())
-				return SearchProviderType.SOLR;
+            if (rb82.IsChecked.GetValueOrDefault())
+                return AppDomain.CurrentDomain.BaseDirectory +
+                       "configurations/Config Enable-Disable Sitecore_8.2-160906.csv";
 
-			if (rbAzure.IsChecked.GetValueOrDefault())
-				return SearchProviderType.Azure;
+            if (rb82u1.IsChecked.GetValueOrDefault())
+                return AppDomain.CurrentDomain.BaseDirectory +
+                       "configurations/Config Enable-Disable Sitecore_8.2 Update1.csv";
 
-			return SearchProviderType.Lucene;
-		}
+            if (rb82u2.IsChecked.GetValueOrDefault())
+                return AppDomain.CurrentDomain.BaseDirectory +
+                       "configurations/Config Enable-Disable Sitecore_8.2 Update2.csv";
 
-		private FileInfo FindFile(DirectoryInfo rootFolder, string fileName)
-		{
-			var fileInfo = rootFolder.GetFiles(fileName + "*").FirstOrDefault();
-			if (fileInfo != null)
-				return fileInfo;
+            throw new Exception("There's no Sitecore version selected");
+        }
 
-			var subDirectories = rootFolder.GetDirectories();
-			if (subDirectories.Any())
-				foreach (var directoryInfo in subDirectories)
-				{
-					var file = FindFile(directoryInfo, fileName);
-					if (file != null)
-						return file;
-				}
+        private FileInfo FindFile(DirectoryInfo rootFolder, string fileName)
+        {
+            var fileInfo = rootFolder.GetFiles(fileName + "*").FirstOrDefault();
+            if (fileInfo != null)
+                return fileInfo;
 
-			return null;
-		}
+            var subDirectories = rootFolder.GetDirectories();
+            if (subDirectories.Any())
+                foreach (var directoryInfo in subDirectories)
+                {
+                    var file = FindFile(directoryInfo, fileName);
+                    if (file != null)
+                        return file;
+                }
 
-		private static void CheckConfiguration(FileInfo configFile, ConfigItem configurationItem,
-			IEnumerable<ServerRoleType> selectedRoles, SearchProviderType searchProviderType)
-		{
-			if (configFile == null)
-				return;
+            return null;
+        }
 
-			var configFileName = SanitizeConfigFileName(configFile.Name);
-			var configurationItemFileName = SanitizeConfigFileName(configurationItem.ConfigFileName);
-			if (configFileName == configurationItemFileName)
-			{
-				var configFileStatus = configurationItem.HasToBeEnabledOrDisabled(selectedRoles, searchProviderType);
-				if (configFileStatus == ConfigFileStatus.HasToBeEnabled)
-				{
-					if (!configFile.Exists)
-					{
-						configurationItem.SetResult(ConfigFileResult.NotValidFileNotFound);
-					}
-					else
-					{
-						configurationItem.ConfigFileName = configFile.Name;
-						if (configFile.Extension == ".config")
-							configurationItem.SetResult(ConfigFileResult.IsValid);
-						else
-							configurationItem.SetResult(ConfigFileResult.NotValid);
-					}
-				}
-				else
-				{
-					if (!configFile.Exists)
-					{
-						configurationItem.SetResult(ConfigFileResult.IsValid);
-					}
-					else if (configFile.Extension != ".config")
-					{
-						configurationItem.ConfigFileName = configFile.Name;
-						configurationItem.SetResult(ConfigFileResult.IsValid);
-					}
-					else
-					{
-						configurationItem.ConfigFileName = configFile.Name;
-						configurationItem.SetResult(ConfigFileResult.NotValid);
-					}
-				}
-			}
-		}
+        private void CheckFileConfiguration(FileInfo configFile, ConfigItem configurationItem)
+        {
+            SetFileConfigurationResult.Process(configFile, configurationItem, SelectedRoles, SelectedSearchProviderType);
+        }
 
-		private static string SanitizeConfigFileName(string configFileName)
-		{
-			if (string.IsNullOrWhiteSpace(configFileName))
-				return string.Empty;
+        private void DisplayResultInGridView()
+        {
+            var gridRows = new List<GridRowResult>();
 
-			var pos = configFileName.IndexOf(".config", StringComparison.Ordinal);
-			return configFileName.Substring(0, pos + 7);
-		}
+            foreach (var configurationItem in _configurationItems)
+                gridRows.Add(new GridRowResult(configurationItem.ID)
+                {
+                    ConfigFileName = configurationItem.FileName,
+                    ConfigFileFullPath =
+                        configurationItem.DirectoryPath.TrimEnd('\\') + "\\" + configurationItem.FileName,
+                    Status =
+                        configurationItem.HasToBeEnabledOrDisabled(SelectedRoles, SelectedSearchProviderType),
+                    Result = configurationItem.Result
+                });
 
-		private void DisplayResultInGridView(List<ServerRoleType> selectedRoles)
-		{
-			var gridRows = new List<GridResult>();
+            dataGrid.ItemsSource = gridRows;
+        }
 
-			foreach (var configurationItem in _configurationItems)
-				gridRows.Add(new GridResult
-				{
-					ConfigFileName = configurationItem.ConfigFileName,
-					Status = configurationItem.HasToBeEnabledOrDisabled(selectedRoles, GetSelectedSearchProviderType()),
-					IsValid = configurationItem.Result
-				});
+        private void ButtonToggle_OnClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button) sender;
+            var gridRow = (GridRowResult) button.CommandParameter;
+            var tempConfigFileFullPath = StripWebsitePath(gridRow.ConfigFileFullPath);            
+            var file = _websiteFolderDirectoryInfo.GetFiles(tempConfigFileFullPath).SingleOrDefault();
+            if (file == null)
+            {
+                MessageBox.Show("Cannot found the specified file");
+                return;
+            }
 
-			dataGrid.ItemsSource = gridRows.OrderByDescending(x => x.IsValid);
-		}
+            if (button.Content.ToString() == "Enable")
+            {
+                tempConfigFileFullPath = file.FullName.ToSanitizedConfigFileName();
+                file.MoveTo(tempConfigFileFullPath);
+                CheckFileConfiguration(file, _configurationItems.Single(x => x.ID == gridRow.ID));
+            }
+            else
+            {
+                file.MoveTo(file.FullName + ".disabled");
+                CheckFileConfiguration(file, _configurationItems.Single(x => x.ID == gridRow.ID));
+            }
 
-		private void ButtonToggle_OnClick(object sender, RoutedEventArgs e)
-		{
-			var button = (Button) sender;
-			var configFileName = button.CommandParameter;
-			var file = FindFile(_websiteFolderDirectoryInfo.GetDirectories("App_Config/include").Single(), configFileName + "*");
-			if (button.Content.ToString() == "Enable")
-				file.MoveTo(SanitizeConfigFileName(file.FullName));
-			else
-				file.MoveTo(file.FullName + ".disabled");
+            DisplayResultInGridView();
+        }
 
-			btnAnalyze_Click(sender, e);
-		}
-	}
+        private string StripWebsitePath(string filePath)
+        {
+            if (filePath.StartsWith("\\website\\"))
+                return filePath.Replace("\\website\\", string.Empty);
+
+            return filePath;
+        }
+    }
 }
