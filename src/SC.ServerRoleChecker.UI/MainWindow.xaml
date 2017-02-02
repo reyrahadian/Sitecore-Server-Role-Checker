@@ -6,7 +6,19 @@
 				xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:SC.ServerRoleChecker.UI"
         mc:Ignorable="d"
-        Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="942" Height="630.717">
+        Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="942" Height="630.717" Icon="Images/Options.png">
+	<Controls:MetroWindow.IconTemplate>
+		<DataTemplate>
+			<Grid Width="{TemplateBinding Width}"
+                 Height="{TemplateBinding Height}"
+                 Margin="4"
+                 Background="Transparent"
+                 RenderOptions.EdgeMode="Aliased"
+                 RenderOptions.BitmapScalingMode="HighQuality">
+				<Image Source="Images/Options.png"></Image>
+			</Grid>
+		</DataTemplate>
+	</Controls:MetroWindow.IconTemplate>
 	<DockPanel Background="White">
 		<Grid DockPanel.Dock="Top">
 			<Grid.ColumnDefinitions>
@@ -65,6 +77,9 @@
 							<DataTrigger Binding="{Binding Result}" Value="NotValid">
 								<Setter Property="Background" Value="Wheat"></Setter>
 							</DataTrigger>
+							<Trigger Property="IsSelected" Value="True" >
+								<Setter Property="Background" Value="Gainsboro" />
+							</Trigger>
 						</Style.Triggers>
 					</Style>
 				</DataGrid.RowStyle>
