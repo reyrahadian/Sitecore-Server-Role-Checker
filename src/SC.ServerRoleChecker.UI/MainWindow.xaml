@@ -78,7 +78,7 @@
 								<Setter Property="Background" Value="Wheat"></Setter>
 							</DataTrigger>
 							<Trigger Property="IsSelected" Value="True" >
-								<Setter Property="Background" Value="Gainsboro" />
+								<Setter Property="Background" Value="DimGray" />
 							</Trigger>
 						</Style.Triggers>
 					</Style>
