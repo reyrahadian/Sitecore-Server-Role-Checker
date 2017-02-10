@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigItem.cs" />
+    <Compile Include="ConfigItemClassResultMap.cs" />
     <Compile Include="ConfigItemClassMap.cs" />
     <Compile Include="Enums\ConfigFileResult.cs" />
     <Compile Include="Enums\ConfigFileStatus.cs" />

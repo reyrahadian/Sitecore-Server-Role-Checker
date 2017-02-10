@@ -49,6 +49,7 @@
 				<CheckBox x:Name="cbProcessing" Content="Processing" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,85,0,0" Grid.Column="1"/>
 				<CheckBox x:Name="cbReportingService" Content="Reporting Service" HorizontalAlignment="Left" Margin="125.333,106,0,0" VerticalAlignment="Top" Grid.Column="1"/>
 				<TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="110.333,21,0,0" TextWrapping="Wrap" Text="Dedicated Role" VerticalAlignment="Top" Grid.Column="1"/>
+				<Button x:Name="btnExport" Content="Export" HorizontalAlignment="Left" Margin="202,142,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="btnExport_Click"/>
 			</Grid>
 		</Grid>
 		<Grid DockPanel.Dock="Bottom">
@@ -56,7 +57,7 @@
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="File Name" Binding="{Binding ConfigFileFullPath}"></DataGridTextColumn>
 					<DataGridTextColumn Header="Action" Binding="{Binding StatusText}" IsReadOnly="True"></DataGridTextColumn >
-					<DataGridTemplateColumn Header="Status" CanUserReorder="True">
+					<DataGridTemplateColumn Header="Status" CanUserSort="True" SortMemberPath="Result">
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
 								<Image Source="{Binding ConfigFileResultImage}" Height="15" Width="15" ToolTip="{Binding ConfigResultImageToolTip}"></Image>
@@ -75,6 +76,9 @@
 					<Style TargetType="DataGridRow">
 						<Style.Triggers>
 							<DataTrigger Binding="{Binding Result}" Value="NotValid">
+								<Setter Property="Background" Value="Wheat"></Setter>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding Result}" Value="NotValidFileNotFound">
 								<Setter Property="Background" Value="Wheat"></Setter>
 							</DataTrigger>
 							<Trigger Property="IsSelected" Value="True" >

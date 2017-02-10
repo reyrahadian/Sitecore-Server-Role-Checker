@@ -5,12 +5,14 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using CsvHelper;
+using CsvHelper.Configuration;
 using SC.ServerRoleChecker.Core;
 using SC.ServerRoleChecker.Core.Enums;
 using SC.ServerRoleChecker.Core.Extensions;
 using SC.ServerRoleChecker.Core.Validators;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace SC.ServerRoleChecker.UI
 {
@@ -105,7 +107,7 @@ namespace SC.ServerRoleChecker.UI
                         {
                             //suppress file not found                            
                         }
-                        
+
 
                         CheckFileConfiguration(file, configurationItem);
                     }
@@ -194,9 +196,9 @@ namespace SC.ServerRoleChecker.UI
 
         private void ButtonToggle_OnClick(object sender, RoutedEventArgs e)
         {
-            var button = (Button) sender;
-            var gridRow = (GridRowResult) button.CommandParameter;
-            var tempConfigFileFullPath = StripWebsitePath(gridRow.ConfigFileFullPath);            
+            var button = (Button)sender;
+            var gridRow = (GridRowResult)button.CommandParameter;
+            var tempConfigFileFullPath = StripWebsitePath(gridRow.ConfigFileFullPath);
             var file = _websiteFolderDirectoryInfo.GetFiles(tempConfigFileFullPath).SingleOrDefault();
             if (file == null)
             {
@@ -225,6 +227,28 @@ namespace SC.ServerRoleChecker.UI
                 return filePath.Replace("\\website\\", string.Empty);
 
             return filePath;
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            var sourceFilePath = AppDomain.CurrentDomain.BaseDirectory + "exports/results.csv";
+
+            var writer = new CsvWriter(new StreamWriter(sourceFilePath));
+            writer.Configuration.HasHeaderRecord = true;
+            writer.Configuration.RegisterClassMap<ConfigItemClassResultMap>();
+            writer.WriteRecords(_configurationItems);
+            var dlg = new SaveFileDialog();
+            dlg.FileName = "results";
+            dlg.DefaultExt = ".csv";
+            dlg.Filter = "CSV documents (.csv)|*.csv";
+
+            var result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                var destinationFilePath = dlg.FileName;
+                File.Copy(sourceFilePath, destinationFilePath, true);
+            }
         }
     }
 }
