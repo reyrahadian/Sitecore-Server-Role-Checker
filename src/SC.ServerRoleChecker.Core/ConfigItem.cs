@@ -7,23 +7,23 @@ namespace SC.ServerRoleChecker.Core
 {
     public class ConfigItem
     {
+        private const string ENABLE_TEXT = "Enable";
+        private const string DISABLE_TEXT = "Disable";
+        private const string NOTAPPLICABLE_TEXT = "n/a";
+
         public ConfigItem()
         {
             ID = Guid.NewGuid();
         }
 
         public Guid ID { get; private set; }
-        private const string ENABLE_TEXT = "Enable";
         public string ProductName { get; set; }
         public string DirectoryPath { get; set; }
         public string FileName { get; set; }
 
         public string FileFullPath
         {
-            get
-            {
-                return DirectoryPath.TrimEnd(new[] { '\\' }) + "\\" + FileName;
-            }
+            get { return DirectoryPath.TrimEnd('\\') + "\\" + FileName; }
         }
 
         public string Type { get; set; }
@@ -35,7 +35,8 @@ namespace SC.ServerRoleChecker.Core
 
         public ConfigFileResult Result { get; private set; }
 
-        public ConfigFileStatus HasToBeEnabledOrDisabled(IEnumerable<ServerRoleType> roles, SearchProviderType searchProvider)
+        public ConfigFileStatus HasToBeEnabledOrDisabled(IEnumerable<ServerRoleType> roles,
+            SearchProviderType searchProvider)
         {
             if (!string.IsNullOrWhiteSpace(SearchProviderUsed) &&
                 (SearchProviderUsed.ToLower().Contains("lucene") || SearchProviderUsed.ToLower().Contains("solr") ||
@@ -51,7 +52,8 @@ namespace SC.ServerRoleChecker.Core
 
                 if (searchProvider == SearchProviderType.SOLR)
                 {
-                    if (SearchProviderUsed.ToLower().Contains("lucene") || SearchProviderUsed.ToLower().Contains("azure"))
+                    if (SearchProviderUsed.ToLower().Contains("lucene") ||
+                        SearchProviderUsed.ToLower().Contains("azure"))
                         return ConfigFileStatus.HasToBeDisabled;
 
                     return GetConfigFileStatusBasedOnRoles(roles);
@@ -71,20 +73,50 @@ namespace SC.ServerRoleChecker.Core
 
         private ConfigFileStatus GetConfigFileStatusBasedOnRoles(IEnumerable<ServerRoleType> roles)
         {
-            if (roles.Contains(ServerRoleType.CD))
-                if (ContentDelivery == ENABLE_TEXT)
-                    return ConfigFileStatus.HasToBeEnabled;
-            if (roles.Contains(ServerRoleType.CM))
-                if (ContentManagement == ENABLE_TEXT)
-                    return ConfigFileStatus.HasToBeEnabled;
-            if (roles.Contains(ServerRoleType.Processing))
-                if (Processing == ENABLE_TEXT)
-                    return ConfigFileStatus.HasToBeEnabled;
-            if (roles.Contains(ServerRoleType.ReportingService))
-                if (ReportingService == ENABLE_TEXT)
-                    return ConfigFileStatus.HasToBeEnabled;
+            var result = ConfigFileStatus.NotApplicable;
 
-            return ConfigFileStatus.HasToBeDisabled;
+            if (roles.Contains(ServerRoleType.CD))
+                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentDelivery));
+            if (roles.Contains(ServerRoleType.CM))
+                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentManagement));
+            if (roles.Contains(ServerRoleType.Processing))
+                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(Processing));
+            if (roles.Contains(ServerRoleType.ReportingService))
+                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ReportingService));
+
+            return result;
+        }
+
+        private ConfigFileStatus GetConfigFileStatusBasedOnInstruction(string instruction)
+        {
+            if (instruction.Equals(ENABLE_TEXT, StringComparison.InvariantCultureIgnoreCase))
+                return ConfigFileStatus.HasToBeEnabled;
+            if (instruction.Equals(DISABLE_TEXT, StringComparison.InvariantCultureIgnoreCase))
+                return ConfigFileStatus.HasToBeDisabled;
+            if (instruction.Equals(NOTAPPLICABLE_TEXT, StringComparison.InvariantCultureIgnoreCase))
+                return ConfigFileStatus.NotApplicable;
+
+            throw new ArgumentException(nameof(instruction));
+        }
+
+        private ConfigFileStatus SetConfigFileStatus(ConfigFileStatus currentStatus, ConfigFileStatus newStatus)
+        {
+            if (currentStatus == ConfigFileStatus.HasToBeEnabled)
+                return currentStatus;
+
+            if (currentStatus == ConfigFileStatus.HasToBeDisabled)
+                if (newStatus == ConfigFileStatus.HasToBeEnabled)
+                    return newStatus;
+                else
+                    return currentStatus;
+
+            if (currentStatus == ConfigFileStatus.NotApplicable)
+                if ((newStatus == ConfigFileStatus.HasToBeDisabled) || (newStatus == ConfigFileStatus.HasToBeEnabled))
+                    return newStatus;
+                else
+                    return currentStatus;
+
+            throw new ArgumentException(nameof(newStatus));
         }
 
         public void SetResult(ConfigFileResult result)

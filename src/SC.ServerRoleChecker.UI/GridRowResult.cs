@@ -21,8 +21,12 @@ namespace SC.ServerRoleChecker.UI
             {
                 if (Status == ConfigFileStatus.HasToBeDisabled)
                     return "Need to be disabled";
+                if (Status == ConfigFileStatus.NotApplicable)
+                    return "Not Applicable";
+                if(Status == ConfigFileStatus.HasToBeEnabled)
+                    return "Need to be enabled";
 
-                return "Need to be enabled";
+                return "Unrecognized status!";
             }
         }
 

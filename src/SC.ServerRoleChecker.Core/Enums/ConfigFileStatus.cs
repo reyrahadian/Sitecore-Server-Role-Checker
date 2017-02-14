@@ -3,6 +3,7 @@
 	public enum ConfigFileStatus
 	{
 		HasToBeDisabled,
-		HasToBeEnabled
+		HasToBeEnabled,
+        NotApplicable
 	}
 }

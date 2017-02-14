@@ -41,7 +41,7 @@ namespace SC.ServerRoleChecker.Core.Validators
                             configurationItem.SetResult(ConfigFileResult.NotValid);
                     }
                 }
-                else
+                else if(configFileStatus == ConfigFileStatus.HasToBeDisabled)
                 {
                     if (!configFile.Exists)
                     {
@@ -57,6 +57,10 @@ namespace SC.ServerRoleChecker.Core.Validators
                         configurationItem.FileName = configFile.Name;
                         configurationItem.SetResult(ConfigFileResult.NotValid);
                     }
+                }
+                else if (configFileStatus == ConfigFileStatus.NotApplicable)
+                {
+                    configurationItem.SetResult(ConfigFileResult.IsValid);
                 }
             }
         }
