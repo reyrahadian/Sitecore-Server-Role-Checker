@@ -10,6 +10,7 @@ namespace SC.ServerRoleChecker.UI
         {
             ID = id;
         }
+
         public Guid ID { get; private set; }
         public string ConfigFileName { get; set; }
         public string ConfigFileFullPath { get; set; }
@@ -23,7 +24,7 @@ namespace SC.ServerRoleChecker.UI
                     return "Need to be disabled";
                 if (Status == ConfigFileStatus.NotApplicable)
                     return "Not Applicable";
-                if(Status == ConfigFileStatus.HasToBeEnabled)
+                if (Status == ConfigFileStatus.HasToBeEnabled)
                     return "Need to be enabled";
 
                 return "Unrecognized status!";
@@ -71,20 +72,22 @@ namespace SC.ServerRoleChecker.UI
             }
         }
 
-        private bool IsEnabled()
-        {
-            return ConfigFileName.EndsWith(".config");
-        }
-
         public Visibility ToggleButtonVisible
         {
             get
             {
-                if(Result == ConfigFileResult.NotValidFileNotFound)
+                if (Result == ConfigFileResult.NotValidFileNotFound)
                     return Visibility.Hidden;
 
                 return Visibility.Visible;
             }
-        }       
+        }
+
+        public string SearchProvider { get; set; }
+
+        private bool IsEnabled()
+        {
+            return ConfigFileName.EndsWith(".config");
+        }
     }
 }

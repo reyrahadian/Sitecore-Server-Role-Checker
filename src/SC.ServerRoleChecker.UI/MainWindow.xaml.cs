@@ -188,6 +188,7 @@ namespace SC.ServerRoleChecker.UI
                         configurationItem.DirectoryPath.TrimEnd('\\') + "\\" + configurationItem.FileName,
                     Status =
                         configurationItem.HasToBeEnabledOrDisabled(SelectedRoles, SelectedSearchProviderType),
+                    SearchProvider = configurationItem.SearchProviderUsed,
                     Result = configurationItem.Result
                 });
 
