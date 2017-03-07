@@ -12,6 +12,7 @@ using SC.ServerRoleChecker.Core.Extensions;
 using SC.ServerRoleChecker.Core.Validators;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
+using RadioButton = System.Windows.Controls.RadioButton;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace SC.ServerRoleChecker.UI
@@ -40,8 +41,10 @@ namespace SC.ServerRoleChecker.UI
                     roles.Add(ServerRoleType.CM);
                 if (cbProcessing.IsChecked.GetValueOrDefault())
                     roles.Add(ServerRoleType.Processing);
-                if (cbReportingService.IsChecked.GetValueOrDefault())
-                    roles.Add(ServerRoleType.ReportingService);
+                if (cbRemoteReportingServer.IsChecked.GetValueOrDefault())
+                    roles.Add(ServerRoleType.RemoteReportingServer);
+                if(cbRemoteReportingClient.IsChecked.GetValueOrDefault())
+                    roles.Add(ServerRoleType.RemoteReportingClient);
 
                 return roles;
             }
@@ -250,6 +253,6 @@ namespace SC.ServerRoleChecker.UI
                 var destinationFilePath = dlg.FileName;
                 File.Copy(sourceFilePath, destinationFilePath, true);
             }
-        }
+        }             
     }
 }

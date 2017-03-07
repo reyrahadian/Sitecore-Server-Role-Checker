@@ -4,7 +4,8 @@
 	{
 		CM,
 		Processing,
-		ReportingService,
+		RemoteReportingServer,
+        RemoteReportingClient,
 		CD
 	}
 }

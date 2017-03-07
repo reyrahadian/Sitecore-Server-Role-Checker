@@ -14,7 +14,8 @@ namespace SC.ServerRoleChecker.Core
 			Map(x => x.ContentDelivery).Index(5);
 			Map(x => x.ContentManagement).Index(6);
 			Map(x => x.Processing).Index(7);
-			Map(x => x.ReportingService).Index(8);
-		}
+			Map(x => x.RemoteReportingServer).Index(8);
+            Map(x => x.RemoteReportingClient).Index(9);
+        }
 	}
 }

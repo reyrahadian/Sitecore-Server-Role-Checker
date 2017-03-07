@@ -47,9 +47,10 @@
 				<CheckBox x:Name="cbCD" Content="Content Delivery" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,64,0,0" Grid.Column="1"/>
 				<CheckBox x:Name="cbCM" Content="Content Management" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,43,0,0" Grid.Column="1"/>
 				<CheckBox x:Name="cbProcessing" Content="Processing" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,85,0,0" Grid.Column="1"/>
-				<CheckBox x:Name="cbReportingService" Content="Reporting Service" HorizontalAlignment="Left" Margin="125.333,106,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-				<TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="110.333,21,0,0" TextWrapping="Wrap" Text="Dedicated Role" VerticalAlignment="Top" Grid.Column="1"/>
+				<CheckBox x:Name="cbRemoteReportingServer" Content="Remote Reporting Server" HorizontalAlignment="Left" Margin="297,64,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you want to configure this instance as a remote reporting server"/>
+				<TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="110.333,21,0,0" TextWrapping="Wrap" Text="Server Role" VerticalAlignment="Top" Grid.Column="1"/>
 				<Button x:Name="btnExport" Content="Export" HorizontalAlignment="Left" Margin="202,142,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="btnExport_Click"/>
+				<CheckBox x:Name="cbRemoteReportingClient" Content="Remote Reporting Client" HorizontalAlignment="Left" Margin="297,43,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you have a remote reporting server and want to setup this instance as a the reporting client"/>
 			</Grid>
 		</Grid>
 		<Grid DockPanel.Dock="Bottom">

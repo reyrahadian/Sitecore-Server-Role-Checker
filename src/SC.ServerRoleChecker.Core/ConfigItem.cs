@@ -31,7 +31,8 @@ namespace SC.ServerRoleChecker.Core
         public string ContentDelivery { get; set; }
         public string ContentManagement { get; set; }
         public string Processing { get; set; }
-        public string ReportingService { get; set; }
+        public string RemoteReportingServer { get; set; }
+        public string RemoteReportingClient { get; set; }
 
         public ConfigFileResult Result { get; private set; }
 
@@ -81,8 +82,10 @@ namespace SC.ServerRoleChecker.Core
                 result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentManagement));
             if (roles.Contains(ServerRoleType.Processing))
                 result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(Processing));
-            if (roles.Contains(ServerRoleType.ReportingService))
-                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ReportingService));
+            if (roles.Contains(ServerRoleType.RemoteReportingServer))
+                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(RemoteReportingServer));
+            if (roles.Contains(ServerRoleType.RemoteReportingClient))
+                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(RemoteReportingClient));
 
             return result;
         }
