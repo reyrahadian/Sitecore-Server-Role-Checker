@@ -5,14 +5,13 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using CsvHelper;
-using CsvHelper.Configuration;
 using SC.ServerRoleChecker.Core;
 using SC.ServerRoleChecker.Core.Enums;
 using SC.ServerRoleChecker.Core.Extensions;
-using SC.ServerRoleChecker.Core.Validators;
+using SC.ServerRoleChecker.Core.Mappings;
+using SC.ServerRoleChecker.Core.Models;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
-using RadioButton = System.Windows.Controls.RadioButton;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace SC.ServerRoleChecker.UI
@@ -43,7 +42,7 @@ namespace SC.ServerRoleChecker.UI
                     roles.Add(ServerRoleType.Processing);
                 if (cbRemoteReportingServer.IsChecked.GetValueOrDefault())
                     roles.Add(ServerRoleType.RemoteReportingServer);
-                if(cbRemoteReportingClient.IsChecked.GetValueOrDefault())
+                if (cbRemoteReportingClient.IsChecked.GetValueOrDefault())
                     roles.Add(ServerRoleType.RemoteReportingClient);
 
                 return roles;
@@ -154,29 +153,12 @@ namespace SC.ServerRoleChecker.UI
                        "configurations/Config Enable-Disable Sitecore_8.2 Update2.csv";
 
             throw new Exception("There's no Sitecore version selected");
-        }
-
-        private FileInfo FindFile(DirectoryInfo rootFolder, string fileName)
-        {
-            var fileInfo = rootFolder.GetFiles(fileName + "*").FirstOrDefault();
-            if (fileInfo != null)
-                return fileInfo;
-
-            var subDirectories = rootFolder.GetDirectories();
-            if (subDirectories.Any())
-                foreach (var directoryInfo in subDirectories)
-                {
-                    var file = FindFile(directoryInfo, fileName);
-                    if (file != null)
-                        return file;
-                }
-
-            return null;
-        }
+        }      
 
         private void CheckFileConfiguration(FileInfo configFile, ConfigItem configurationItem)
         {
-            SetFileConfigurationResult.Process(configFile, configurationItem, SelectedRoles, SelectedSearchProviderType);
+            var configFileChecker = new ConfigFileChecker(configFile, configurationItem);
+            configFileChecker.Validate(SelectedRoles, SelectedSearchProviderType);
         }
 
         private void DisplayResultInGridView()
@@ -200,8 +182,8 @@ namespace SC.ServerRoleChecker.UI
 
         private void ButtonToggle_OnClick(object sender, RoutedEventArgs e)
         {
-            var button = (Button)sender;
-            var gridRow = (GridRowResult)button.CommandParameter;
+            var button = (Button) sender;
+            var gridRow = (GridRowResult) button.CommandParameter;
             var tempConfigFileFullPath = StripWebsitePath(gridRow.ConfigFileFullPath);
             var file = _websiteFolderDirectoryInfo.GetFiles(tempConfigFileFullPath).SingleOrDefault();
             if (file == null)
@@ -253,6 +235,6 @@ namespace SC.ServerRoleChecker.UI
                 var destinationFilePath = dlg.FileName;
                 File.Copy(sourceFilePath, destinationFilePath, true);
             }
-        }             
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SC.ServerRoleChecker.Core.Enums;
 
-namespace SC.ServerRoleChecker.Core
+namespace SC.ServerRoleChecker.Core.Models
 {
     public class ConfigItem
     {

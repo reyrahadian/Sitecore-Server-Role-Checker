@@ -44,16 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigItem.cs" />
-    <Compile Include="ConfigItemClassResultMap.cs" />
-    <Compile Include="ConfigItemClassMap.cs" />
+    <Compile Include="Models\ConfigItem.cs" />
+    <Compile Include="Mappings\ConfigItemClassResultMap.cs" />
+    <Compile Include="Mappings\ConfigItemClassMap.cs" />
     <Compile Include="Enums\ConfigFileResult.cs" />
     <Compile Include="Enums\ConfigFileStatus.cs" />
     <Compile Include="Enums\SearchProviderType.cs" />
     <Compile Include="Enums\ServerRoleType.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\SetFileConfigurationResult.cs" />
+    <Compile Include="Validators\ConfigFileChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

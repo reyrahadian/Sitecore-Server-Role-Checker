@@ -1,4 +1,4 @@
-﻿namespace SC.ServerRoleChecker.Core
+﻿namespace SC.ServerRoleChecker.Core.Mappings
 {
     public class ConfigItemClassResultMap : ConfigItemClassMap
     {

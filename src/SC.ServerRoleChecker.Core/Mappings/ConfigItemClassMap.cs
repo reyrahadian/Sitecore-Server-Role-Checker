@@ -1,6 +1,7 @@
 ﻿using CsvHelper.Configuration;
+using SC.ServerRoleChecker.Core.Models;
 
-namespace SC.ServerRoleChecker.Core
+namespace SC.ServerRoleChecker.Core.Mappings
 {
 	public class ConfigItemClassMap : CsvClassMap<ConfigItem>
 	{
