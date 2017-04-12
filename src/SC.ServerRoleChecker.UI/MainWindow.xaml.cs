@@ -27,6 +27,7 @@ namespace SC.ServerRoleChecker.UI
         public MainWindow()
         {
             InitializeComponent();
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
         private List<ServerRoleType> SelectedRoles
@@ -64,6 +65,13 @@ namespace SC.ServerRoleChecker.UI
 
                 return SearchProviderType.Lucene;
             }
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            var exception = (Exception) e.ExceptionObject;
+            var errorMessage = string.Format("An unhandled exception occurred: {0}", exception.Message);
+            MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void btnBrowseWebsiteFolder_Click(object sender, RoutedEventArgs e)
@@ -153,7 +161,7 @@ namespace SC.ServerRoleChecker.UI
                        "configurations/Config Enable-Disable Sitecore_8.2 Update2.csv";
 
             throw new Exception("There's no Sitecore version selected");
-        }      
+        }
 
         private void CheckFileConfiguration(FileInfo configFile, ConfigItem configurationItem)
         {
