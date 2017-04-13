@@ -9,6 +9,10 @@ namespace SC.ServerRoleChecker.Core.Extensions
             if (string.IsNullOrWhiteSpace(configFileName))
                 return string.Empty;
 
+            //the tool does not support oracle config as of now
+            if(configFileName.ToLowerInvariant().Contains("oracle"))
+                return configFileName;
+
             var pos = configFileName.IndexOf(".config", StringComparison.Ordinal);
             if (pos > 0)
             {

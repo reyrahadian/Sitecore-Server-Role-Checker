@@ -51,12 +51,12 @@ namespace SC.ServerRoleChecker.Core
                     }
                     else if (_configFile.Extension != ".config")
                     {
-                        _configItem.FileName = _configFile.Name;
+                        //_configItem.FileName = _configFile.Name;
                         _configItem.SetResult(ConfigFileResult.IsValid);
                     }
                     else
                     {
-                        _configItem.FileName = _configFile.Name;
+                        //_configItem.FileName = _configFile.Name;
                         _configItem.SetResult(ConfigFileResult.NotValid);
                     }
                 else if (configFileStatus == ConfigFileStatus.NotApplicable)
