@@ -37,7 +37,7 @@ namespace SC.ServerRoleChecker.UI
         {
             get
             {
-                if (Result == ConfigFileResult.IsValid)
+                if (Result == ConfigFileResult.IsValid || Result == ConfigFileResult.IsValidFileNotFound)
                     return "pack://application:,,,/SC.ServerRoleChecker.UI;component/Images/tick.png";
                 if (Result == ConfigFileResult.NotValid)
                     return "pack://application:,,,/SC.ServerRoleChecker.UI;component/Images/close.png";
@@ -51,11 +51,13 @@ namespace SC.ServerRoleChecker.UI
             get
             {
                 if (Result == ConfigFileResult.NotValidFileNotFound)
-                    return "Configuration file was not found";
+                    return "The configuration file was not found, the file should exist and " + StatusText.ToLower();
                 if (Result == ConfigFileResult.IsValid)
-                    return "Configuration file is valid";
+                    return "The current configuration is correct";
                 if (Result == ConfigFileResult.NotValid)
-                    return "Configuration file is not valid";
+                    return "The current configuration is not correct";
+                if (Result == ConfigFileResult.IsValidFileNotFound)
+                    return "The configuration file was not found but this configuration is correct";
 
                 return string.Empty;
             }
@@ -89,5 +91,7 @@ namespace SC.ServerRoleChecker.UI
         {
             return ConfigFileName.EndsWith(".config");
         }
+
+        public string Note { get; set; }
     }
 }

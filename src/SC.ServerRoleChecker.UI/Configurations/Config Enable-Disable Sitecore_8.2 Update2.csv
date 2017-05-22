@@ -1,6 +1,6 @@
 Product Name,File Path,Config file name,Type,Search Provider Used,Content Delivery (CD),Content Management (CM),Processing,Reporting,Reporting Client
 Platform,\website\,Web.config,config,,Enable,Enable,Enable,Enable,n/a
-Platform,\website\,Web.config.Oracle,config,,Enable,Enable,Disable,Disable,n/a
+Platform,\website\,Web.config.Oracle,config,,n/a,n/a,n/a,n/a,n/a
 Platform,\website\App_Config\,Commands.config,config,,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,ConnectionStrings.config,config,,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,ConnectionStringsOracle.config,config,,Enable,Enable,Enable,Enable,n/a
@@ -11,7 +11,7 @@ Platform,\website\App_Config\,MimeTypes.config,config,,Enable,Enable,Enable,Enab
 Platform,\website\App_Config\,Portraits.config,config,,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,Prototypes.config,config,,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,Sitecore.config,config,,Enable,Enable,Enable,Enable,n/a
-Platform,\website\App_Config\,Sitecore.config.Oracle,config,,Enable,Enable,Disable,Disable,n/a
+Platform,\website\App_Config\,Sitecore.config.Oracle,config,,n/a,n/a,n/a,n/a,n/a
 Platform,\website\App_Config\,XamlSharp.config,config,,Enable,Enable,Enable,Enable,n/a
 SPEAK,\website\App_Config\Include,001.Sitecore.Speak.Important.config,config,,Disable,Enable,Disable,Disable,n/a
 Platform,\website\App_Config\Include,CacheContainers.config.example,example,,Enable,Enable,Enable,Enable,n/a

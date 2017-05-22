@@ -3,7 +3,8 @@
 	public enum ConfigFileResult
 	{
 		IsValid,
-		NotValid,
-		NotValidFileNotFound
+        IsValidFileNotFound,
+        NotValid,
+		NotValidFileNotFound,        
 	}
 }

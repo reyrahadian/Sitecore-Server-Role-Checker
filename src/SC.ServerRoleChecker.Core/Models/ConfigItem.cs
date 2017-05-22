@@ -28,6 +28,22 @@ namespace SC.ServerRoleChecker.Core.Models
 
         public string Type { get; set; }
         public string SearchProviderUsed { get; set; }
+
+        public SearchProviderType SearchProviderUsedType
+        {
+            get
+            {
+                if (SearchProviderUsed.ToLower().Contains("solr"))
+                    return SearchProviderType.SOLR;
+                if (SearchProviderUsed.ToLower().Contains("lucene"))
+                    return SearchProviderType.Lucene;
+                if (SearchProviderUsed.ToLower().Contains("azure"))
+                    return SearchProviderType.Azure;
+
+                return SearchProviderType.Unknown;
+            }
+        }
+
         public string ContentDelivery { get; set; }
         public string ContentManagement { get; set; }
         public string Processing { get; set; }
@@ -35,17 +51,20 @@ namespace SC.ServerRoleChecker.Core.Models
         public string RemoteReportingClient { get; set; }
 
         public ConfigFileResult Result { get; private set; }
+        public string Note { get; set; }
 
         public ConfigFileStatus HasToBeEnabledOrDisabled(IEnumerable<ServerRoleType> roles,
             SearchProviderType searchProvider)
         {
-            if (!string.IsNullOrWhiteSpace(SearchProviderUsed) &&
-                (SearchProviderUsed.ToLower().Contains("lucene") || SearchProviderUsed.ToLower().Contains("solr") ||
-                 SearchProviderUsed.ToLower().Contains("azure")))
+            if (IsValidSearchProvider())
             {
                 if (searchProvider == SearchProviderType.Lucene)
                 {
-                    if (SearchProviderUsed.ToLower().Contains("solr") || SearchProviderUsed.ToLower().Contains("azure"))
+                    if (FileName.ToLower().Contains("lucene") && (SearchProviderUsedType != SearchProviderType.Lucene))
+                        return ConfigFileStatus.NotApplicable;
+
+                    if ((SearchProviderUsedType == SearchProviderType.SOLR) ||
+                        (SearchProviderUsedType == SearchProviderType.Azure))
                         return ConfigFileStatus.HasToBeDisabled;
 
                     return GetConfigFileStatusBasedOnRoles(roles);
@@ -53,8 +72,11 @@ namespace SC.ServerRoleChecker.Core.Models
 
                 if (searchProvider == SearchProviderType.SOLR)
                 {
-                    if (SearchProviderUsed.ToLower().Contains("lucene") ||
-                        SearchProviderUsed.ToLower().Contains("azure"))
+                    if (FileName.ToLower().Contains("solr") && (SearchProviderUsedType != SearchProviderType.SOLR))
+                        return ConfigFileStatus.NotApplicable;
+
+                    if ((SearchProviderUsedType == SearchProviderType.Lucene) ||
+                        (SearchProviderUsedType == SearchProviderType.Azure))
                         return ConfigFileStatus.HasToBeDisabled;
 
                     return GetConfigFileStatusBasedOnRoles(roles);
@@ -62,7 +84,11 @@ namespace SC.ServerRoleChecker.Core.Models
 
                 if (searchProvider == SearchProviderType.Azure)
                 {
-                    if (SearchProviderUsed.ToLower().Contains("lucene") || SearchProviderUsed.ToLower().Contains("solr"))
+                    if (FileName.ToLower().Contains("azure") && (SearchProviderUsedType != SearchProviderType.Azure))
+                        return ConfigFileStatus.NotApplicable;
+
+                    if ((SearchProviderUsedType == SearchProviderType.Lucene) ||
+                        (SearchProviderUsedType == SearchProviderType.SOLR))
                         return ConfigFileStatus.HasToBeDisabled;
 
                     return GetConfigFileStatusBasedOnRoles(roles);
@@ -70,6 +96,13 @@ namespace SC.ServerRoleChecker.Core.Models
             }
 
             return GetConfigFileStatusBasedOnRoles(roles);
+        }
+
+        private bool IsValidSearchProvider()
+        {
+            return (SearchProviderUsedType == SearchProviderType.Lucene) ||
+                   (SearchProviderUsedType == SearchProviderType.SOLR) ||
+                   (SearchProviderUsedType == SearchProviderType.Azure);
         }
 
         private ConfigFileStatus GetConfigFileStatusBasedOnRoles(IEnumerable<ServerRoleType> roles)
@@ -105,7 +138,13 @@ namespace SC.ServerRoleChecker.Core.Models
         private ConfigFileStatus SetConfigFileStatus(ConfigFileStatus currentStatus, ConfigFileStatus newStatus)
         {
             if (currentStatus == ConfigFileStatus.HasToBeEnabled)
+            {
+                if (newStatus == ConfigFileStatus.NotApplicable)
+                    return ConfigFileStatus.NotApplicable;
+
                 return currentStatus;
+            }
+
 
             if (currentStatus == ConfigFileStatus.HasToBeDisabled)
                 if (newStatus == ConfigFileStatus.HasToBeEnabled)

@@ -203,8 +203,8 @@ xDB Cloud,\website\App_Config\Include\XdbCloud,Sitecore.ContentSearch.Cloud.Defa
 xDB Cloud,\website\App_Config\Include\XdbCloud,Sitecore.ContentSearch.Cloud.Index.Analytics.config.disabled,disabled,,Disable,Disable,Disable,Disable,n/a
 Platform,\website\App_Config\Include\Z.SwitchMasterToWeb,important.txt,txt,,n/a,n/a,n/a,n/a,n/a
 Platform,\website\App_Config\Include\Z.SwitchMasterToWeb,SwitchMasterToWeb.config.example,example,,n/a,n/a,n/a,n/a,n/a
-Platform,\website\App_Config\Include\zzz\,DataFolder.config,config,,Enable,Enable,Enable,Enable,n/a
-Platform,\website\App_Config\Include\zzz\,UseServerSideRedirect.config,config,,Enable,Enable,Enable,Enable,n/a
+Platform,\website\App_Config\Include\zzz,DataFolder.config,config,,Enable,Enable,Enable,Enable,n/a
+Platform,\website\App_Config\Include\zzz,UseServerSideRedirect.config,config,,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\Prefetch,Common.config,config,,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\Prefetch,Core.config,config,,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\Prefetch,Master.config,config,,Enable,Enable,Enable,Enable,n/a

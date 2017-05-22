@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using CsvHelper;
@@ -108,16 +109,19 @@ namespace SC.ServerRoleChecker.UI
                     {
                         var filePath = StripWebsitePath(configurationItem.FileFullPath).ToSanitizedConfigFileName();
                         FileInfo file = null;
+
                         try
                         {
                             var files = _websiteFolderDirectoryInfo.GetFiles(filePath + "*");
-                            file = files.FirstOrDefault();
+                            file = files.FirstOrDefault();                            
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            //suppress file not found                            
+                            var message = new StringBuilder();
+                            message.AppendLine("Failed to process " + configurationItem.FileFullPath);
+                            message.AppendLine("Details: " + ex.Message);
+                            configurationItem.Note = message.ToString();                            
                         }
-
 
                         CheckFileConfiguration(file, configurationItem);
                     }
@@ -182,7 +186,8 @@ namespace SC.ServerRoleChecker.UI
                     Status =
                         configurationItem.HasToBeEnabledOrDisabled(SelectedRoles, SelectedSearchProviderType),
                     SearchProvider = configurationItem.SearchProviderUsed,
-                    Result = configurationItem.Result
+                    Result = configurationItem.Result,
+                    Note = configurationItem.Note
                 });
 
             dataGrid.ItemsSource = gridRows;

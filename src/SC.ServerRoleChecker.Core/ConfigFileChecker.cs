@@ -25,42 +25,44 @@ namespace SC.ServerRoleChecker.Core
             {
                 if (configFileStatus == ConfigFileStatus.HasToBeEnabled)
                     _configItem.SetResult(ConfigFileResult.NotValidFileNotFound);
+                else if(configFileStatus == ConfigFileStatus.HasToBeDisabled)
+                    _configItem.SetResult(ConfigFileResult.IsValidFileNotFound);
                 return;
             }
 
             var configFileName = _configFile.Name.ToSanitizedConfigFileName();
             var configurationItemFileName = _configItem.FileName.ToSanitizedConfigFileName();
-            if (configFileName == configurationItemFileName)
-                if (configFileStatus == ConfigFileStatus.HasToBeEnabled)
-                    if (!_configFile.Exists)
-                    {
-                        _configItem.SetResult(ConfigFileResult.NotValidFileNotFound);
-                    }
-                    else
-                    {
-                        _configItem.FileName = _configFile.Name;
-                        if (_configFile.Extension == ".config")
-                            _configItem.SetResult(ConfigFileResult.IsValid);
-                        else
-                            _configItem.SetResult(ConfigFileResult.NotValid);
-                    }
-                else if (configFileStatus == ConfigFileStatus.HasToBeDisabled)
-                    if (!_configFile.Exists)
-                    {
+            if (configFileName != configurationItemFileName)
+                return;
+
+            if (configFileStatus == ConfigFileStatus.HasToBeEnabled)
+                if (!_configFile.Exists)
+                {
+                    _configItem.SetResult(ConfigFileResult.NotValidFileNotFound);
+                }
+                else
+                {
+                    _configItem.FileName = _configFile.Name;
+                    if (_configFile.Extension == ".config")
                         _configItem.SetResult(ConfigFileResult.IsValid);
-                    }
-                    else if (_configFile.Extension != ".config")
-                    {
-                        //_configItem.FileName = _configFile.Name;
-                        _configItem.SetResult(ConfigFileResult.IsValid);
-                    }
                     else
-                    {
-                        //_configItem.FileName = _configFile.Name;
                         _configItem.SetResult(ConfigFileResult.NotValid);
-                    }
-                else if (configFileStatus == ConfigFileStatus.NotApplicable)
+                }
+            else if (configFileStatus == ConfigFileStatus.HasToBeDisabled)
+                if (!_configFile.Exists)
+                {
+                    _configItem.SetResult(ConfigFileResult.IsValidFileNotFound);
+                }
+                else if (_configFile.Extension != ".config")
+                {                    
                     _configItem.SetResult(ConfigFileResult.IsValid);
+                }
+                else
+                {
+                    _configItem.SetResult(ConfigFileResult.NotValid);
+                }
+            else if (configFileStatus == ConfigFileStatus.NotApplicable)
+                _configItem.SetResult(ConfigFileResult.IsValid);
         }
     }
 }

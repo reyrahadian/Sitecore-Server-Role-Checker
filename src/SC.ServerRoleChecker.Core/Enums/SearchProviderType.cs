@@ -2,6 +2,7 @@
 {
 	public enum SearchProviderType
 	{
+        Unknown,
 		Lucene,
 		SOLR,
 		Azure
