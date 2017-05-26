@@ -150,19 +150,19 @@ namespace SC.ServerRoleChecker.UI
         {
             if (rb81u3.IsChecked.GetValueOrDefault())
                 return AppDomain.CurrentDomain.BaseDirectory +
-                       "configurations/Config_Enable-Disable_Sitecore_8.1_upd3.csv";
+                       "configurations/8.1u3.csv";
 
             if (rb82.IsChecked.GetValueOrDefault())
                 return AppDomain.CurrentDomain.BaseDirectory +
-                       "configurations/Config Enable-Disable Sitecore_8.2-160906.csv";
+					   "configurations/8.2.csv";
 
             if (rb82u1.IsChecked.GetValueOrDefault())
                 return AppDomain.CurrentDomain.BaseDirectory +
-                       "configurations/Config Enable-Disable Sitecore_8.2 Update1.csv";
+                       "configurations/8.2u1.csv";
 
             if (rb82u2.IsChecked.GetValueOrDefault())
                 return AppDomain.CurrentDomain.BaseDirectory +
-                       "configurations/Config Enable-Disable Sitecore_8.2 Update2.csv";
+                       "configurations/8.2u2.csv";
 
             throw new Exception("There's no Sitecore version selected");
         }

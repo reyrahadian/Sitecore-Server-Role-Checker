@@ -139,22 +139,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Configurations\Config Enable-Disable Sitecore_8.2 Update1.csv">
+    <None Include="Configurations\8.2u1.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Configurations\Config Enable-Disable Sitecore_8.2 Update1.xlsx" />
-    <None Include="Configurations\Config Enable-Disable Sitecore_8.2 Update2.csv">
+    <None Include="Configurations\8.2u2.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Configurations\Config Enable-Disable Sitecore_8.2 Update2.xlsx" />
-    <None Include="Configurations\Config Enable-Disable Sitecore_8.2-160906.csv">
+    <None Include="Configurations\8.2.csv" />
+    <None Include="Configurations\8.1u3.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Configurations\Config Enable-Disable Sitecore_8.2-160906.xlsx" />
-    <None Include="Configurations\Config_Enable-Disable_Sitecore_8.1_upd3.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configurations\Config_Enable-Disable_Sitecore_8.1_upd3.xlsx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

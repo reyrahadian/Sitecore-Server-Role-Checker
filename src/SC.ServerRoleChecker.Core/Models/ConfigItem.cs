@@ -139,8 +139,8 @@ namespace SC.ServerRoleChecker.Core.Models
         {
             if (currentStatus == ConfigFileStatus.HasToBeEnabled)
             {
-                if (newStatus == ConfigFileStatus.NotApplicable)
-                    return ConfigFileStatus.NotApplicable;
+				if (newStatus == ConfigFileStatus.NotApplicable)
+					return currentStatus;
 
                 return currentStatus;
             }
