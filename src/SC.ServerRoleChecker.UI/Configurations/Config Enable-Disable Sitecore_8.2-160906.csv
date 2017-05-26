@@ -112,7 +112,7 @@ Platform - MVC,\website\App_Config\Include,Sitecore.MvcSimulator.config,config,,
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.Client.config,config,,Disable,Enable,Disable,Disable,n/a
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.config,config,,Disable,Enable,Enable,Enable,n/a
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.Processing.config,config,,Disable,Disable,Enable,Disable,n/a
-Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.RemoteClient.config.disabled,config,,Disable,Enable,Disable,Disable,Enable
+Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.RemoteClient.config.disabled,config,,Disable,Disable,Disable,Disable,Enable
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.Services.config,config,,Disable,Enable,Disable,Enable,n/a
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.Services.RemoteServer.config.disabled,config,,Disable,Disable,Disable,Enable,n/a
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.StorageProviders.config,config,,Disable,Enable,Enable,Enable,n/a
@@ -139,8 +139,8 @@ SPEAK,\website\App_Config\Include,Sitecore.Speak.LaunchPad.config,config,,Disabl
 SPEAK,\website\App_Config\Include,Sitecore.Speak.Mvc.config,config,,Disable,Enable,Disable,Disable,n/a
 Platform,\website\App_Config\Include,Sitecore.WebDAV.config,config,,Disable,Enable,Disable,Disable,n/a
 Marketing Foundation,\website\App_Config\Include,Sitecore.Xdb.config,config,,Enable,Enable,Enable,Enable,n/a
-Marketing Foundation,\website\App_Config\Include,Sitecore.Xdb.Remote.Client.config.disabled,config,,Disable,Enable,Disable,Disable,Enable
-Marketing Foundation,\website\App_Config\Include,Sitecore.Xdb.Remote.Client.MarketingAssets.config.disabled,config,,Disable,Enable,Disable,Disable,Enable
+Marketing Foundation,\website\App_Config\Include,Sitecore.Xdb.Remote.Client.config.disabled,config,,Disable,Disable,Disable,Disable,Enable
+Marketing Foundation,\website\App_Config\Include,Sitecore.Xdb.Remote.Client.MarketingAssets.config.disabled,config,,Disable,Disable,Disable,Disable,Enable
 Marketing Foundation,\website\App_Config\Include,Sitecore.Xdb.Remote.Server.config.disabled,config,,Disable,Disable,Disable,Enable,n/a
 Marketing Foundation,\website\App_Config\Include,Sitecore.Xdb.Remote.Server.MarketingAssets.config.disabled,config,,Disable,Disable,Disable,Enable,n/a
 Platform,\website\App_Config\Include,SitecoreSettings.config.example,example,,n/a,n/a,n/a,n/a,n/a
