@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\FileInfoExtensions.cs" />
     <Compile Include="Models\ConfigItem.cs" />
     <Compile Include="Mappings\ConfigItemClassResultMap.cs" />
     <Compile Include="Mappings\ConfigItemClassMap.cs" />

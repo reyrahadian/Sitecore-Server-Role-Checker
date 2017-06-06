@@ -43,7 +43,7 @@ namespace SC.ServerRoleChecker.Core
                 else
                 {
                     _configItem.FileName = _configFile.Name;
-                    if (_configFile.Extension == ".config")
+                    if (_configFile.IsConfigFileEnabled())
                         _configItem.SetResult(ConfigFileResult.IsValid);
                     else
                         _configItem.SetResult(ConfigFileResult.NotValid);
@@ -53,7 +53,7 @@ namespace SC.ServerRoleChecker.Core
                 {
                     _configItem.SetResult(ConfigFileResult.IsValidFileNotFound);
                 }
-                else if (_configFile.Extension != ".config")
+                else if (!_configFile.IsConfigFileEnabled())
                 {                    
                     _configItem.SetResult(ConfigFileResult.IsValid);
                 }

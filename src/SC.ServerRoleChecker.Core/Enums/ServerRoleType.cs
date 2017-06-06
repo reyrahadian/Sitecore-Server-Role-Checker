@@ -6,6 +6,7 @@
 		Processing,
 		RemoteReportingServer,
         RemoteReportingClient,
-		CD
+		CD,
+		CmAndProcessing
 	}
 }

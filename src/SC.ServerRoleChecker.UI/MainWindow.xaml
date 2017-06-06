@@ -7,92 +7,93 @@
         xmlns:local="clr-namespace:SC.ServerRoleChecker.UI"
         mc:Ignorable="d"
         Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="942" Height="630.717" Icon="Images/Options.png">
-    <Controls:MetroWindow.IconTemplate>
-        <DataTemplate>
-            <Grid Width="{TemplateBinding Width}"
+	<Controls:MetroWindow.IconTemplate>
+		<DataTemplate>
+			<Grid Width="{TemplateBinding Width}"
                  Height="{TemplateBinding Height}"
                  Margin="4"
                  Background="Transparent"
                  RenderOptions.EdgeMode="Aliased"
                  RenderOptions.BitmapScalingMode="HighQuality">
-                <Image Source="Images/Options.png"></Image>
-            </Grid>
-        </DataTemplate>
-    </Controls:MetroWindow.IconTemplate>
-    <DockPanel Background="White">
-        <Grid DockPanel.Dock="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*">
-                </ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="278*"/>
-                    <ColumnDefinition Width="282*"/>
-                </Grid.ColumnDefinitions>
-                <RadioButton x:Name="rbLucene" Content="Lucene" HorizontalAlignment="Left" Margin="31,85,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scSearchProvider"/>
-                <RadioButton x:Name="rbAzure" Content="Azure" HorizontalAlignment="Left" Margin="204,85,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
-                <RadioButton x:Name="rbSOLR" Content="SOLR" HorizontalAlignment="Left" Margin="119,85,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
-                <RadioButton x:Name="rb81u3" Content="8.1u3" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scVersion"/>
-                <RadioButton x:Name="rb82" Content="8.2" HorizontalAlignment="Left" Margin="97,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
-                <RadioButton x:Name="rb82u1" Content="8.2u1" HorizontalAlignment="Left" Margin="157,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
-                <RadioButton x:Name="rb82u2" Content="8.2u2" HorizontalAlignment="Left" Margin="232,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
-                <Button x:Name="btnAnalyze" Content="Analyze" HorizontalAlignment="Left" Margin="110.333,142,0,10" VerticalAlignment="Top" Width="75" Click="btnAnalyze_Click" Grid.Column="1"/>
-                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="31,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Text="Sitecore Version"/>
-                <Button x:Name="btnBrowseWebsiteFolder" Content="Browse" HorizontalAlignment="Left" Margin="183,118,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowseWebsiteFolder_Click" RenderTransformOrigin="-0.213,0.79"/>
-                <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="32,118,0,0" TextWrapping="Wrap" Text="Website Folder Path" VerticalAlignment="Top"/>
-                <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" Margin="31,62,0,0" TextWrapping="Wrap" Text="Search Engine Provider" VerticalAlignment="Top"/>
-                <TextBlock x:Name="textWebsiteFolderPath" HorizontalAlignment="Left" Margin="32,153,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top"/>
+				<Image Source="Images/Options.png"></Image>
+			</Grid>
+		</DataTemplate>
+	</Controls:MetroWindow.IconTemplate>
+	<DockPanel Background="White">
+		<Grid DockPanel.Dock="Top">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*">
+				</ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid Grid.Column="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="278*"/>
+					<ColumnDefinition Width="282*"/>
+				</Grid.ColumnDefinitions>
+				<RadioButton x:Name="rbLucene" Content="Lucene" HorizontalAlignment="Left" Margin="31,85,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scSearchProvider"/>
+				<RadioButton x:Name="rbAzure" Content="Azure" HorizontalAlignment="Left" Margin="204,85,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
+				<RadioButton x:Name="rbSOLR" Content="SOLR" HorizontalAlignment="Left" Margin="119,85,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
+				<RadioButton x:Name="rb81u3" Content="8.1u3" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scVersion"/>
+				<RadioButton x:Name="rb82" Content="8.2" HorizontalAlignment="Left" Margin="97,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
+				<RadioButton x:Name="rb82u1" Content="8.2u1" HorizontalAlignment="Left" Margin="157,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
+				<RadioButton x:Name="rb82u2" Content="8.2u2" HorizontalAlignment="Left" Margin="232,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
+				<Button x:Name="btnAnalyze" Content="Analyze" HorizontalAlignment="Left" Margin="110.333,142,0,10" VerticalAlignment="Top" Width="75" Click="btnAnalyze_Click" Grid.Column="1"/>
+				<TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="31,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Text="Sitecore Version"/>
+				<Button x:Name="btnBrowseWebsiteFolder" Content="Browse" HorizontalAlignment="Left" Margin="183,118,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowseWebsiteFolder_Click" RenderTransformOrigin="-0.213,0.79"/>
+				<TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="32,118,0,0" TextWrapping="Wrap" Text="Website Folder Path" VerticalAlignment="Top"/>
+				<TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" Margin="31,62,0,0" TextWrapping="Wrap" Text="Search Engine Provider" VerticalAlignment="Top"/>
+				<TextBlock x:Name="textWebsiteFolderPath" HorizontalAlignment="Left" Margin="32,153,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top"/>
 
-                <CheckBox x:Name="cbCD" Content="Content Delivery" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,64,0,0" Grid.Column="1"/>
-                <CheckBox x:Name="cbCM" Content="Content Management" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,43,0,0" Grid.Column="1"/>
-                <CheckBox x:Name="cbProcessing" Content="Processing" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,85,0,0" Grid.Column="1"/>
-                <CheckBox x:Name="cbRemoteReportingServer" Content="Remote Reporting Server" HorizontalAlignment="Left" Margin="297,64,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you want to configure this instance as a remote reporting server"/>
-                <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="110.333,21,0,0" TextWrapping="Wrap" Text="Server Role" VerticalAlignment="Top" Grid.Column="1"/>
-                <Button x:Name="btnExport" Content="Export" HorizontalAlignment="Left" Margin="202,142,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="btnExport_Click"/>
-                <CheckBox x:Name="cbRemoteReportingClient" Content="Remote Reporting Client" HorizontalAlignment="Left" Margin="297,43,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you have a remote reporting server and want to setup this instance as a the reporting client"/>
-            </Grid>
-        </Grid>
-        <Grid DockPanel.Dock="Bottom">
-            <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="File Name" Binding="{Binding ConfigFileFullPath}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Search Provider" Binding="{Binding SearchProvider}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Action" Binding="{Binding StatusText}" IsReadOnly="True"></DataGridTextColumn >
-                    <DataGridTextColumn Header="Note" Binding="{Binding ConfigResultImageToolTip}" IsReadOnly="True"></DataGridTextColumn >
-                    <DataGridTemplateColumn Header="Status" CanUserSort="True" SortMemberPath="Result">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding ConfigFileResultImage}" Height="15" Width="15" ToolTip="{Binding ConfigResultImageToolTip}"></Image>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="{Binding ButtonToggleText}" Click="ButtonToggle_OnClick" CommandParameter="{Binding}" Visibility="{Binding ToggleButtonVisible}"></Button>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Result}" Value="NotValid">
-                                <Setter Property="Background" Value="Wheat"></Setter>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Result}" Value="NotValidFileNotFound">
-                                <Setter Property="Background" Value="Wheat"></Setter>
-                            </DataTrigger>
-                            <Trigger Property="IsSelected" Value="True" >
-                                <Setter Property="Background" Value="DimGray" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.RowStyle>
-            </DataGrid>
-        </Grid>
-    </DockPanel>
+				<TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="110.333,21,0,0" TextWrapping="Wrap" Text="Server Role" VerticalAlignment="Top" Grid.Column="1"/>
+				<CheckBox x:Name="cbCD" Content="Content Delivery" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,64,0,0" Grid.Column="1" Click="cbCM_Click"/>
+				<CheckBox x:Name="cbCM" Content="Content Management" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,43,0,0" Grid.Column="1" Click="cbCM_Click"/>
+				<CheckBox x:Name="cbProcessing" Content="Processing" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,85,0,0" Grid.Column="1"/>
+				<CheckBox x:Name="cbRemoteReportingServer" Content="Remote Reporting Server" HorizontalAlignment="Left" Margin="297,85,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you want to configure this instance as a remote reporting server"/>
+				<Button x:Name="btnExport" Content="Export" HorizontalAlignment="Left" Margin="202,142,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="btnExport_Click"/>
+				<CheckBox x:Name="cbRemoteReportingClient" Content="Remote Reporting Client" HorizontalAlignment="Left" Margin="297,64,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you have a remote reporting server and want to setup this instance as a the reporting client"/>
+				<CheckBox x:Name="cbCmAndprocessing" Content="CM + Processing" HorizontalAlignment="Left" Margin="297,43,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you have a remote reporting server and want to setup this instance as a the reporting client" Click="cbCmAndprocessing_Click"/>
+			</Grid>
+		</Grid>
+		<Grid DockPanel.Dock="Bottom">
+			<DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="File Name" Binding="{Binding ConfigFileFullPath}"></DataGridTextColumn>
+					<DataGridTextColumn Header="Search Provider" Binding="{Binding SearchProvider}"></DataGridTextColumn>
+					<DataGridTextColumn Header="Action" Binding="{Binding StatusText}" IsReadOnly="True"></DataGridTextColumn >
+					<DataGridTextColumn Header="Note" Binding="{Binding ConfigResultImageToolTip}" IsReadOnly="True"></DataGridTextColumn >
+					<DataGridTemplateColumn Header="Status" CanUserSort="True" SortMemberPath="Result">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Image Source="{Binding ConfigFileResultImage}" Height="15" Width="15" ToolTip="{Binding ConfigResultImageToolTip}"></Image>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTemplateColumn>
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Button Content="{Binding ButtonToggleText}" Click="ButtonToggle_OnClick" CommandParameter="{Binding}" Visibility="{Binding ToggleButtonVisible}"></Button>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+				</DataGrid.Columns>
+				<DataGrid.RowStyle>
+					<Style TargetType="DataGridRow">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Result}" Value="NotValid">
+								<Setter Property="Background" Value="Wheat"></Setter>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding Result}" Value="NotValidFileNotFound">
+								<Setter Property="Background" Value="Wheat"></Setter>
+							</DataTrigger>
+							<Trigger Property="IsSelected" Value="True" >
+								<Setter Property="Background" Value="DimGray" />
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</DataGrid.RowStyle>
+			</DataGrid>
+		</Grid>
+	</DockPanel>
 </Controls:MetroWindow>
 
 

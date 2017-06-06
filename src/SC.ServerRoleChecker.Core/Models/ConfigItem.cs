@@ -47,6 +47,7 @@ namespace SC.ServerRoleChecker.Core.Models
         public string ContentDelivery { get; set; }
         public string ContentManagement { get; set; }
         public string Processing { get; set; }
+		public string ContentManagementAndProcessing { get; set; }
         public string RemoteReportingServer { get; set; }
         public string RemoteReportingClient { get; set; }
 
@@ -109,6 +110,12 @@ namespace SC.ServerRoleChecker.Core.Models
         {
             var result = ConfigFileStatus.NotApplicable;
 
+	        if (roles.Contains(ServerRoleType.CmAndProcessing))
+	        {
+				// remove cm and processing role to giving wrong recommendation
+		        roles = roles.Where(x => x != ServerRoleType.CM && x != ServerRoleType.Processing);
+	        }
+
             if (roles.Contains(ServerRoleType.CD))
                 result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentDelivery));
             if (roles.Contains(ServerRoleType.CM))
@@ -119,8 +126,10 @@ namespace SC.ServerRoleChecker.Core.Models
                 result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(RemoteReportingServer));
             if (roles.Contains(ServerRoleType.RemoteReportingClient))
                 result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(RemoteReportingClient));
+			if(roles.Contains(ServerRoleType.CmAndProcessing))
+				result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentManagementAndProcessing));
 
-            return result;
+			return result;
         }
 
         private ConfigFileStatus GetConfigFileStatusBasedOnInstruction(string instruction)

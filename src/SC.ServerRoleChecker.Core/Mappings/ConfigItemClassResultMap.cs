@@ -4,7 +4,7 @@
     {
         public ConfigItemClassResultMap()
         {
-            Map(x => x.Result).Index(10);
+            Map(x => x.Result).Index(11);
         }
     }
 }
