@@ -5,174 +5,177 @@ using SC.ServerRoleChecker.Core.Enums;
 
 namespace SC.ServerRoleChecker.Core.Models
 {
-    public class ConfigItem
-    {
-        private const string ENABLE_TEXT = "Enable";
-        private const string DISABLE_TEXT = "Disable";
-        private const string NOTAPPLICABLE_TEXT = "n/a";
+	public class ConfigItem
+	{
+		private const string ENABLE_TEXT = "Enable";
+		private const string DISABLE_TEXT = "Disable";
+		private const string NOTAPPLICABLE_TEXT = "n/a";
 
-        public ConfigItem()
-        {
-            ID = Guid.NewGuid();
-        }
+		public ConfigItem()
+		{
+			ID = Guid.NewGuid();
+		}
 
-        public Guid ID { get; private set; }
-        public string ProductName { get; set; }
-        public string DirectoryPath { get; set; }
-        public string FileName { get; set; }
+		public Guid ID { get; private set; }
+		public string ProductName { get; set; }
+		public string DirectoryPath { get; set; }
+		public string FileName { get; set; }
 
-        public string FileFullPath
-        {
-            get { return DirectoryPath.TrimEnd('\\') + "\\" + FileName; }
-        }
+		public string FileFullPath
+		{
+			get { return DirectoryPath.TrimEnd('\\') + "\\" + FileName; }
+		}
 
-        public string Type { get; set; }
-        public string SearchProviderUsed { get; set; }
+		public string Type { get; set; }
+		public string SearchProviderUsed { get; set; }
 
-        public SearchProviderType SearchProviderUsedType
-        {
-            get
-            {
-                if (SearchProviderUsed.ToLower().Contains("solr"))
-                    return SearchProviderType.SOLR;
-                if (SearchProviderUsed.ToLower().Contains("lucene"))
-                    return SearchProviderType.Lucene;
-                if (SearchProviderUsed.ToLower().Contains("azure"))
-                    return SearchProviderType.Azure;
+		public SearchProviderType SearchProviderUsedType
+		{
+			get
+			{
+				if (SearchProviderUsed.ToLower().Contains("solr"))
+					return SearchProviderType.SOLR;
+				if (SearchProviderUsed.ToLower().Contains("lucene"))
+					return SearchProviderType.Lucene;
+				if (SearchProviderUsed.ToLower().Contains("azure"))
+					return SearchProviderType.Azure;
 
-                return SearchProviderType.Unknown;
-            }
-        }
+				return SearchProviderType.Unknown;
+			}
+		}
 
-        public string ContentDelivery { get; set; }
-        public string ContentManagement { get; set; }
-        public string Processing { get; set; }
+		public string ContentDelivery { get; set; }
+		public string ContentManagement { get; set; }
+		public string Processing { get; set; }
 		public string ContentManagementAndProcessing { get; set; }
-        public string RemoteReportingServer { get; set; }
-        public string RemoteReportingClient { get; set; }
+		public string RemoteReportingServer { get; set; }
+		public string RemoteReportingClient { get; set; }
 
-        public ConfigFileResult Result { get; private set; }
-        public string Note { get; set; }
+		public ConfigFileResult Result { get; private set; }
+		public string Note { get; set; }
 
-        public ConfigFileStatus HasToBeEnabledOrDisabled(IEnumerable<ServerRoleType> roles,
-            SearchProviderType searchProvider)
-        {
-            if (IsValidSearchProvider())
-            {
-                if (searchProvider == SearchProviderType.Lucene)
-                {
-                    if (FileName.ToLower().Contains("lucene") && (SearchProviderUsedType != SearchProviderType.Lucene))
-                        return ConfigFileStatus.NotApplicable;
+		public ConfigFileStatus HasToBeEnabledOrDisabled(IEnumerable<ServerRoleType> roles,
+			SearchProviderType searchProvider)
+		{
+			if (IsValidSearchProvider())
+			{
+				if (searchProvider == SearchProviderType.Lucene)
+				{
+					if (FileName.ToLower().Contains("lucene") && (SearchProviderUsedType != SearchProviderType.Lucene))
+						return ConfigFileStatus.NotApplicable;
 
-                    if ((SearchProviderUsedType == SearchProviderType.SOLR) ||
-                        (SearchProviderUsedType == SearchProviderType.Azure))
-                        return ConfigFileStatus.HasToBeDisabled;
+					if ((SearchProviderUsedType == SearchProviderType.SOLR) ||
+						(SearchProviderUsedType == SearchProviderType.Azure))
+						return ConfigFileStatus.HasToBeDisabled;
 
-                    return GetConfigFileStatusBasedOnRoles(roles);
-                }
+					return GetConfigFileStatusBasedOnRoles(roles);
+				}
 
-                if (searchProvider == SearchProviderType.SOLR)
-                {
-                    if (FileName.ToLower().Contains("solr") && (SearchProviderUsedType != SearchProviderType.SOLR))
-                        return ConfigFileStatus.NotApplicable;
+				if (searchProvider == SearchProviderType.SOLR)
+				{
+					if (FileName.ToLower().Contains("solr") && (SearchProviderUsedType != SearchProviderType.SOLR))
+						return ConfigFileStatus.NotApplicable;
 
-                    if ((SearchProviderUsedType == SearchProviderType.Lucene) ||
-                        (SearchProviderUsedType == SearchProviderType.Azure))
-                        return ConfigFileStatus.HasToBeDisabled;
+					if ((SearchProviderUsedType == SearchProviderType.Lucene) ||
+						(SearchProviderUsedType == SearchProviderType.Azure))
+						return ConfigFileStatus.HasToBeDisabled;
 
-                    return GetConfigFileStatusBasedOnRoles(roles);
-                }
+					return GetConfigFileStatusBasedOnRoles(roles);
+				}
 
-                if (searchProvider == SearchProviderType.Azure)
-                {
-                    if (FileName.ToLower().Contains("azure") && (SearchProviderUsedType != SearchProviderType.Azure))
-                        return ConfigFileStatus.NotApplicable;
+				if (searchProvider == SearchProviderType.Azure)
+				{
+					if (FileName.ToLower().Contains("azure") && (SearchProviderUsedType != SearchProviderType.Azure))
+						return ConfigFileStatus.NotApplicable;
 
-                    if ((SearchProviderUsedType == SearchProviderType.Lucene) ||
-                        (SearchProviderUsedType == SearchProviderType.SOLR))
-                        return ConfigFileStatus.HasToBeDisabled;
+					if ((SearchProviderUsedType == SearchProviderType.Lucene) ||
+						(SearchProviderUsedType == SearchProviderType.SOLR))
+						return ConfigFileStatus.HasToBeDisabled;
 
-                    return GetConfigFileStatusBasedOnRoles(roles);
-                }
-            }
+					return GetConfigFileStatusBasedOnRoles(roles);
+				}
+			}
 
-            return GetConfigFileStatusBasedOnRoles(roles);
-        }
+			return GetConfigFileStatusBasedOnRoles(roles);
+		}
 
-        private bool IsValidSearchProvider()
-        {
-            return (SearchProviderUsedType == SearchProviderType.Lucene) ||
-                   (SearchProviderUsedType == SearchProviderType.SOLR) ||
-                   (SearchProviderUsedType == SearchProviderType.Azure);
-        }
+		private bool IsValidSearchProvider()
+		{
+			return (SearchProviderUsedType == SearchProviderType.Lucene) ||
+				   (SearchProviderUsedType == SearchProviderType.SOLR) ||
+				   (SearchProviderUsedType == SearchProviderType.Azure);
+		}
 
-        private ConfigFileStatus GetConfigFileStatusBasedOnRoles(IEnumerable<ServerRoleType> roles)
-        {
-            var result = ConfigFileStatus.NotApplicable;
+		private ConfigFileStatus GetConfigFileStatusBasedOnRoles(IEnumerable<ServerRoleType> roles)
+		{
+			var result = ConfigFileStatus.NotApplicable;
 
-	        if (roles.Contains(ServerRoleType.CmAndProcessing))
-	        {
-				// remove cm and processing role to giving wrong recommendation
-		        roles = roles.Where(x => x != ServerRoleType.CM && x != ServerRoleType.Processing);
-	        }
+			if (roles.Contains(ServerRoleType.CmAndProcessing))
+			{
+				// remove cm and processing role to avoid giving wrong recommendation
+				roles = roles.Where(x => x != ServerRoleType.CM && x != ServerRoleType.Processing);
+			}
 
-            if (roles.Contains(ServerRoleType.CD))
-                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentDelivery));
-            if (roles.Contains(ServerRoleType.CM))
-                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentManagement));
-            if (roles.Contains(ServerRoleType.Processing))
-                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(Processing));
-            if (roles.Contains(ServerRoleType.RemoteReportingServer))
-                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(RemoteReportingServer));
-            if (roles.Contains(ServerRoleType.RemoteReportingClient))
-                result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(RemoteReportingClient));
-			if(roles.Contains(ServerRoleType.CmAndProcessing))
+			if (roles.Contains(ServerRoleType.CD))
+				result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentDelivery));
+			if (roles.Contains(ServerRoleType.CM))
+				result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentManagement));
+			if (roles.Contains(ServerRoleType.Processing))
+				result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(Processing));
+			if (roles.Contains(ServerRoleType.RemoteReportingServer))
+				result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(RemoteReportingServer));
+			if (roles.Contains(ServerRoleType.RemoteReportingClient))
+				result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(RemoteReportingClient));
+			if (roles.Contains(ServerRoleType.CmAndProcessing))
 				result = SetConfigFileStatus(result, GetConfigFileStatusBasedOnInstruction(ContentManagementAndProcessing));
 
 			return result;
-        }
+		}
 
-        private ConfigFileStatus GetConfigFileStatusBasedOnInstruction(string instruction)
-        {
-            if (instruction.Equals(ENABLE_TEXT, StringComparison.InvariantCultureIgnoreCase))
-                return ConfigFileStatus.HasToBeEnabled;
-            if (instruction.Equals(DISABLE_TEXT, StringComparison.InvariantCultureIgnoreCase))
-                return ConfigFileStatus.HasToBeDisabled;
-            if (instruction.Equals(NOTAPPLICABLE_TEXT, StringComparison.InvariantCultureIgnoreCase))
-                return ConfigFileStatus.NotApplicable;
+		private ConfigFileStatus GetConfigFileStatusBasedOnInstruction(string instruction)
+		{
+			if (string.IsNullOrWhiteSpace(instruction))
+				throw new ArgumentException("Cannot found instruction for the current file. Check the csv file for the current Sitecore version that you've selected");
 
-            throw new ArgumentException(nameof(instruction));
-        }
+			if (instruction.Equals(ENABLE_TEXT, StringComparison.InvariantCultureIgnoreCase))
+				return ConfigFileStatus.HasToBeEnabled;
+			if (instruction.Equals(DISABLE_TEXT, StringComparison.InvariantCultureIgnoreCase))
+				return ConfigFileStatus.HasToBeDisabled;
+			if (instruction.Equals(NOTAPPLICABLE_TEXT, StringComparison.InvariantCultureIgnoreCase))
+				return ConfigFileStatus.NotApplicable;
 
-        private ConfigFileStatus SetConfigFileStatus(ConfigFileStatus currentStatus, ConfigFileStatus newStatus)
-        {
-            if (currentStatus == ConfigFileStatus.HasToBeEnabled)
-            {
+			throw new ArgumentException(instruction + " instruction are not recognized by the tool");
+		}
+
+		private ConfigFileStatus SetConfigFileStatus(ConfigFileStatus currentStatus, ConfigFileStatus newStatus)
+		{
+			if (currentStatus == ConfigFileStatus.HasToBeEnabled)
+			{
 				if (newStatus == ConfigFileStatus.NotApplicable)
 					return currentStatus;
 
-                return currentStatus;
-            }
+				return currentStatus;
+			}
 
 
-            if (currentStatus == ConfigFileStatus.HasToBeDisabled)
-                if (newStatus == ConfigFileStatus.HasToBeEnabled)
-                    return newStatus;
-                else
-                    return currentStatus;
+			if (currentStatus == ConfigFileStatus.HasToBeDisabled)
+				if (newStatus == ConfigFileStatus.HasToBeEnabled)
+					return newStatus;
+				else
+					return currentStatus;
 
-            if (currentStatus == ConfigFileStatus.NotApplicable)
-                if ((newStatus == ConfigFileStatus.HasToBeDisabled) || (newStatus == ConfigFileStatus.HasToBeEnabled))
-                    return newStatus;
-                else
-                    return currentStatus;
+			if (currentStatus == ConfigFileStatus.NotApplicable)
+				if ((newStatus == ConfigFileStatus.HasToBeDisabled) || (newStatus == ConfigFileStatus.HasToBeEnabled))
+					return newStatus;
+				else
+					return currentStatus;
 
-            throw new ArgumentException(nameof(newStatus));
-        }
+			throw new ArgumentException(nameof(newStatus));
+		}
 
-        public void SetResult(ConfigFileResult result)
-        {
-            Result = result;
-        }
-    }
+		public void SetResult(ConfigFileResult result)
+		{
+			Result = result;
+		}
+	}
 }

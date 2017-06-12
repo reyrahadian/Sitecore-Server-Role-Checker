@@ -2,7 +2,7 @@ Product Name,File Path,Config file name,Config Type,Search Provider Used,Content
 Platform,\website\,Web.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,Commands.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,ConnectionStrings.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
-Platform,\website\App_Config\,ConnectionStringsOracle.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
+Platform,\website\App_Config\,ConnectionStringsOracle.config,config,,n/a,n/a,n/a,n/a,n/a,n/a
 Platform,\website\App_Config\,FieldTypes.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,Icons.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,LanguageDefinitions.config,config,,Enable,Enable,Enable,Enable,Enable,n/a

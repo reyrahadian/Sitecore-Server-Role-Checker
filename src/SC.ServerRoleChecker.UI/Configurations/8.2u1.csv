@@ -1,9 +1,9 @@
 Product Name,File Path,Config file name,Type,Search Provider Used,Content Delivery (CD),Content Management (CM),Processing,CM + Processing,Reporting,Reporting Client
 Platform,\website\,Web.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
-Platform,\website\,Web.config.Oracle,config,,n/a,n/a,n/a,,n/a,n/a
+Platform,\website\,Web.config.Oracle,config,,n/a,n/a,n/a,n/a,n/a,n/a
 Platform,\website\App_Config\,Commands.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,ConnectionStrings.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
-Platform,\website\App_Config\,ConnectionStringsOracle.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
+Platform,\website\App_Config\,ConnectionStringsOracle.config,config,,n/a,n/a,n/a,n/a,n/a,n/a
 Platform,\website\App_Config\,FieldTypes.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,Icons.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
 Platform,\website\App_Config\,LanguageDefinitions.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
@@ -255,5 +255,5 @@ Exec Insight Dashboard,\website\sitecore\shell\Applications\Reports\Dashboard,Si
 Sitecore Commerce Connect,\website\App_Config\Include,Sitecore.Commerce.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
 Sitecore Commerce Connect,\website\App_Config\Include,Sitecore.Commerce. ExperienceAnalytics.config,config,,Disable,Enable,Enable,Enable,Disable,n/a
 Sitecore Commerce Connect,\website\App_Config\Include,Sitecore.Commerce. ExperienceProfile.ReportingServer.config,config,,Disable,Enable,Disable,Enable,Enable,n/a
- Sitecore xDB,\website\App_Config\Include,Sitecore.Analytics.SessionSerialization.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
- Sitecore xDB,\website\App_Config\Include, Sitecore.ExperienceContentManagement.Administration.config,config,,Disable,Enable,Disable,Enable,Disable,n/a
+Sitecore xDB,\website\App_Config\Include,Sitecore.Analytics.SessionSerialization.config,config,,Enable,Enable,Enable,Enable,Enable,n/a
+Sitecore xDB,\website\App_Config\Include,Sitecore.ExperienceContentManagement.Administration.config,config,,Disable,Enable,Disable,Enable,Disable,n/a
