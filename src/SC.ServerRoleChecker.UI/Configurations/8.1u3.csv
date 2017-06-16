@@ -101,7 +101,7 @@ Platform - MVC,\website\App_Config\Include,Sitecore.MvcSimulator.config,config,,
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.Client.config,config,,Disable,Enable,Disable,Enable,Disable,n/a
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.config,config,,Disable,Enable,Enable,Enable,Enable,n/a
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.Processing.config,config,,Disable,Disable,Enable,Enable,Disable,n/a
-Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.RemoteClient.config.disabled,disabled,,Disable,Enable,Disable,Enable,Disable,Enable
+Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.RemoteClient.config.disabled,disabled,,Disable,Enable,Disable,Disable,Disable,Enable
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.Services.config,config,,Disable,Enable,Disable,Enable,Enable,n/a
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.Services.RemoteServer.config.disabled,disabled,,Disable,Disable,Disable,Disable,Enable,n/a
 Path Analyzer,\website\App_Config\Include,Sitecore.PathAnalyzer.StorageProviders.config,config,,Disable,Enable,Enable,Enable,Enable,n/a
