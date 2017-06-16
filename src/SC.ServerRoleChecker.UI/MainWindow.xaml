@@ -6,7 +6,7 @@
 				xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:SC.ServerRoleChecker.UI"
         mc:Ignorable="d"
-        Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="942" Height="630.717" Icon="Images/Options.png">
+        Title="Sitecore Server Role Checker" WindowStartupLocation="CenterScreen" TextOptions.TextFormattingMode="Display" WindowStyle="ThreeDBorderWindow" Width="942" Height="630.717" Icon="Images/Options.png" TitleCaps="False">
 	<Controls:MetroWindow.IconTemplate>
 		<DataTemplate>
 			<Grid Width="{TemplateBinding Width}"

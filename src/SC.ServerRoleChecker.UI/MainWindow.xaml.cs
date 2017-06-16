@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Deployment.Application;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,21 @@ namespace SC.ServerRoleChecker.UI
 		{
 			InitializeComponent();
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+			SetApplicationTitle();
+		}
+
+		private void SetApplicationTitle()
+		{
+			try
+			{
+				Title = $"{Title} - v{ApplicationDeployment.CurrentDeployment.CurrentVersion}";
+			}
+			catch (InvalidDeploymentException)
+			{
+				//// you cannot read publish version when app isn't installed 
+				//// (e.g. during debug)
+				Title = $"{Title} - not installed";
+			}
 		}
 
 		private List<ServerRoleType> SelectedRoles
@@ -265,7 +281,7 @@ namespace SC.ServerRoleChecker.UI
 		{
 			var cb = (CheckBox)sender;
 
-			cbCmAndprocessing.IsChecked = !cb.IsChecked.GetValueOrDefault();			
+			cbCmAndprocessing.IsChecked = !cb.IsChecked.GetValueOrDefault();
 		}
 	}
 }
