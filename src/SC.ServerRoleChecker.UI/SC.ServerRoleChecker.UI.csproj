@@ -16,7 +16,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\_Workspace\Sandbox\ssrct.update.local\</PublishUrl>
+    <PublishUrl>C:\_Workspace\Sandbox\Sitecore-Server-Role-Checker-ClickOnce\docs\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -26,17 +26,17 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://ssrct.update.local/</InstallUrl>
-    <UpdateUrl>http://ssrct.update.local/</UpdateUrl>
+    <InstallUrl>https://reyrahadian.github.io/Sitecore-Server-Role-Checker-ClickOnce/</InstallUrl>
+    <UpdateUrl>https://reyrahadian.github.io/Sitecore-Server-Role-Checker-ClickOnce/</UpdateUrl>
     <TargetCulture>en-AU</TargetCulture>
     <ProductName>Sitecore Server Role Checker Tool</ProductName>
     <PublisherName>Rey Rahadian</PublisherName>
     <SuiteName>Sitecore Server Role Checker Tool</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>23</ApplicationRevision>
     <ApplicationVersion>1.3.1.%2a</ApplicationVersion>
-    <UseApplicationTrust>true</UseApplicationTrust>
+    <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -76,7 +76,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ServerRoleChecker.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Sitecore Server Role Checker.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
@@ -168,9 +168,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Sitecore Server Role Checker.pfx" />
     <Resource Include="Resources\Entypo.ttf" />
-    <None Include="SC.ServerRoleChecker.UI_TemporaryKey.pfx" />
-    <None Include="ServerRoleChecker.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
