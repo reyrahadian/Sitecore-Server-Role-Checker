@@ -97,6 +97,10 @@ namespace SC.ServerRoleChecker.UI
 		private void btnBrowseWebsiteFolder_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new FolderBrowserDialog();
+			if (!string.IsNullOrWhiteSpace(textWebsiteFolderPath.Text))
+			{
+				dialog.SelectedPath = textWebsiteFolderPath.Text;
+			}
 			var result = dialog.ShowDialog();
 
 			if (result == System.Windows.Forms.DialogResult.OK)
