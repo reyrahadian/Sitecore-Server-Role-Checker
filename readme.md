@@ -25,9 +25,7 @@ Sitecore has an excel spreadsheet for configuring a dedicated server role availa
 4. Check the result
 
 ## How to run
-1. Get the SC.ServerRoleChecker.zip file in the [releases page](https://github.com/reyrahadian/Sitecore-Server-Role-Checker/releases) 
-2. Extract to your local machine
-3. Run the Sc.ServerRoleChecker.UI.exe
+Click [here](https://reyrahadian.github.io/Sitecore-Server-Role-Checker-ClickOnce/index.html)
 
 ## Found an issue?
 Create an issue ticket in Github or submit a PR that contains the issue fix
