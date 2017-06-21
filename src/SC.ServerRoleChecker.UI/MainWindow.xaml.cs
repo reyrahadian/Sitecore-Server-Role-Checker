@@ -12,6 +12,7 @@ using SC.ServerRoleChecker.Core.Enums;
 using SC.ServerRoleChecker.Core.Extensions;
 using SC.ServerRoleChecker.Core.Mappings;
 using SC.ServerRoleChecker.Core.Models;
+using SC.ServerRoleChecker.UI.Models;
 using Button = System.Windows.Controls.Button;
 using CheckBox = System.Windows.Controls.CheckBox;
 using MessageBox = System.Windows.MessageBox;
@@ -32,6 +33,38 @@ namespace SC.ServerRoleChecker.UI
 			InitializeComponent();
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			SetApplicationTitle();
+			SetSitecoreVersionComboBox();
+		}
+
+		private void SetSitecoreVersionComboBox()
+		{
+			var items = new List<SitecoreVersionComboItem>();
+			items.Add(new SitecoreVersionComboItem
+			{
+				Version = SitecoreVersion.Sc80u3,
+				Name = "Sitecore 8.0u3"
+			});
+			items.Add(new SitecoreVersionComboItem
+			{
+				Version = SitecoreVersion.Sc81u3,
+				Name = "Sitecore 8.1u3"
+			});
+			items.Add(new SitecoreVersionComboItem
+			{
+				Version = SitecoreVersion.Sc82,
+				Name = "Sitecore 8.2"
+			});
+			items.Add(new SitecoreVersionComboItem
+			{
+				Version = SitecoreVersion.Sc82u1,
+				Name = "Sitecore 8.2u1"
+			});
+			items.Add(new SitecoreVersionComboItem
+			{
+				Version = SitecoreVersion.Sc82u2_Sc82u3,
+				Name = "Sitecore 8.2u2 & 8.2u3"
+			});
+			cmbSitecoreVersion.ItemsSource = items;
 		}
 
 		private void SetApplicationTitle()
@@ -89,7 +122,7 @@ namespace SC.ServerRoleChecker.UI
 
 		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-			var exception = (Exception)e.ExceptionObject;
+			var exception = (Exception) e.ExceptionObject;
 			var errorMessage = string.Format("An unhandled exception occurred: {0}", exception.Message);
 			MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
@@ -171,21 +204,26 @@ namespace SC.ServerRoleChecker.UI
 
 		private string GetCsvFilePath()
 		{
-			if (rb81u3.IsChecked.GetValueOrDefault())
+			var scSelectedItem = (SitecoreVersionComboItem) cmbSitecoreVersion.SelectedItem;
+			if (scSelectedItem.Version == SitecoreVersion.Sc80u3)
 				return AppDomain.CurrentDomain.BaseDirectory +
-					   "configurations/8.1u3.csv";
+				       "configurations/8.0u3.csv";
 
-			if (rb82.IsChecked.GetValueOrDefault())
+			if (scSelectedItem.Version == SitecoreVersion.Sc81u3)
 				return AppDomain.CurrentDomain.BaseDirectory +
-					   "configurations/8.2.csv";
+				       "configurations/8.1u3.csv";
 
-			if (rb82u1.IsChecked.GetValueOrDefault())
+			if (scSelectedItem.Version == SitecoreVersion.Sc82)
 				return AppDomain.CurrentDomain.BaseDirectory +
-					   "configurations/8.2u1.csv";
+				       "configurations/8.2.csv";
 
-			if (rb82u2.IsChecked.GetValueOrDefault())
+			if (scSelectedItem.Version == SitecoreVersion.Sc82u1)
 				return AppDomain.CurrentDomain.BaseDirectory +
-					   "configurations/8.2u2.csv";
+				       "configurations/8.2u1.csv";
+
+			if (scSelectedItem.Version == SitecoreVersion.Sc82u2_Sc82u3)
+				return AppDomain.CurrentDomain.BaseDirectory +
+				       "configurations/8.2u2.csv";
 
 			throw new Exception("There's no Sitecore version selected");
 		}
@@ -218,8 +256,8 @@ namespace SC.ServerRoleChecker.UI
 
 		private void ButtonToggle_OnClick(object sender, RoutedEventArgs e)
 		{
-			var button = (Button)sender;
-			var gridRow = (GridRowResult)button.CommandParameter;
+			var button = (Button) sender;
+			var gridRow = (GridRowResult) button.CommandParameter;
 			var tempConfigFileFullPath = StripWebsitePath(gridRow.ConfigFileFullPath);
 			var file = _websiteFolderDirectoryInfo.GetFiles(tempConfigFileFullPath).SingleOrDefault();
 			if (file == null)
@@ -275,17 +313,29 @@ namespace SC.ServerRoleChecker.UI
 
 		private void cbCmAndprocessing_Click(object sender, RoutedEventArgs e)
 		{
-			var cb = (CheckBox)sender;
-
-			cbCD.IsChecked = !cb.IsChecked.GetValueOrDefault();
-			cbCM.IsChecked = !cb.IsChecked.GetValueOrDefault();
+			var cb = (CheckBox) sender;
+			if (cb.Equals(cbCmAndprocessing) && cbCmAndprocessing.IsChecked.GetValueOrDefault())
+			{				
+				cbCM.IsChecked = false;
+				cbProcessing.IsChecked = false;
+			}			
 		}
 
 		private void cbCM_Click(object sender, RoutedEventArgs e)
 		{
-			var cb = (CheckBox)sender;
+			var cb = (CheckBox) sender;
+			if (cb.Equals(cbCM) || cb.Equals(cbProcessing))
+				cbCmAndprocessing.IsChecked = false;			
+		}
 
-			cbCmAndprocessing.IsChecked = !cb.IsChecked.GetValueOrDefault();
+		private void cbRemoteReportingClient_Checked(object sender, RoutedEventArgs e)
+		{
+			var cb = (CheckBox)sender;
+			if (cb.Equals(cbRemoteReportingClient) && cbRemoteReportingClient.IsChecked.GetValueOrDefault())
+				cbRemoteReportingServer.IsChecked = false;
+
+			if (cb.Equals(cbRemoteReportingServer) && cbRemoteReportingServer.IsChecked.GetValueOrDefault())
+				cbRemoteReportingClient.IsChecked = false;			
 		}
 	}
 }

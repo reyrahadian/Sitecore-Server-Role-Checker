@@ -33,10 +33,6 @@
 				<RadioButton x:Name="rbLucene" Content="Lucene" HorizontalAlignment="Left" Margin="31,85,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scSearchProvider"/>
 				<RadioButton x:Name="rbAzure" Content="Azure" HorizontalAlignment="Left" Margin="204,85,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
 				<RadioButton x:Name="rbSOLR" Content="SOLR" HorizontalAlignment="Left" Margin="119,85,0,0" VerticalAlignment="Top" GroupName="scSearchProvider"/>
-				<RadioButton x:Name="rb81u3" Content="8.1u3" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="scVersion"/>
-				<RadioButton x:Name="rb82" Content="8.2" HorizontalAlignment="Left" Margin="97,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
-				<RadioButton x:Name="rb82u1" Content="8.2u1" HorizontalAlignment="Left" Margin="157,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
-				<RadioButton x:Name="rb82u2" Content="8.2u2" HorizontalAlignment="Left" Margin="232,32,0,0" VerticalAlignment="Top" GroupName="scVersion"/>
 				<Button x:Name="btnAnalyze" Content="Analyze" HorizontalAlignment="Left" Margin="110.333,142,0,10" VerticalAlignment="Top" Width="75" Click="btnAnalyze_Click" Grid.Column="1"/>
 				<TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="31,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Text="Sitecore Version"/>
 				<Button x:Name="btnBrowseWebsiteFolder" Content="Browse" HorizontalAlignment="Left" Margin="183,118,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowseWebsiteFolder_Click" RenderTransformOrigin="-0.213,0.79"/>
@@ -45,13 +41,22 @@
 				<TextBlock x:Name="textWebsiteFolderPath" HorizontalAlignment="Left" Margin="32,153,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top"/>
 
 				<TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="110.333,21,0,0" TextWrapping="Wrap" Text="Server Role" VerticalAlignment="Top" Grid.Column="1"/>
-				<CheckBox x:Name="cbCD" Content="Content Delivery" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,64,0,0" Grid.Column="1" Click="cbCM_Click"/>
-				<CheckBox x:Name="cbCM" Content="Content Management" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,43,0,0" Grid.Column="1" Click="cbCM_Click"/>
-				<CheckBox x:Name="cbProcessing" Content="Processing" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125.333,85,0,0" Grid.Column="1"/>
-				<CheckBox x:Name="cbRemoteReportingServer" Content="Remote Reporting Server" HorizontalAlignment="Left" Margin="297,85,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you want to configure this instance as a remote reporting server"/>
+				<CheckBox x:Name="cbCD" Content="Content Delivery" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125,44,0,0" Grid.Column="1" Click="cbCM_Click"/>
+				<CheckBox x:Name="cbCM" Content="Content Management" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125,68,0,0" Grid.Column="1" Click="cbCM_Click"/>
+				<CheckBox x:Name="cbProcessing" Content="Processing" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125,90,0,0" Grid.Column="1" Click="cbCM_Click"/>
+				<CheckBox x:Name="cbRemoteReportingServer" Content="Remote Reporting Server" HorizontalAlignment="Left" Margin="297,69,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you want to configure this instance as a remote reporting server" Checked="cbRemoteReportingClient_Checked"/>
 				<Button x:Name="btnExport" Content="Export" HorizontalAlignment="Left" Margin="202,142,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="btnExport_Click"/>
-				<CheckBox x:Name="cbRemoteReportingClient" Content="Remote Reporting Client" HorizontalAlignment="Left" Margin="297,64,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you have a remote reporting server and want to setup this instance as a the reporting client"/>
-				<CheckBox x:Name="cbCmAndprocessing" Content="CM + Processing" HorizontalAlignment="Left" Margin="297,43,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you have a remote reporting server and want to setup this instance as a the reporting client" Click="cbCmAndprocessing_Click"/>
+				<CheckBox x:Name="cbRemoteReportingClient" Content="Remote Reporting Client" HorizontalAlignment="Left" Margin="297,93,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you have a remote reporting server and want to setup this instance as a the reporting client" Checked="cbRemoteReportingClient_Checked"/>
+				<CheckBox x:Name="cbCmAndprocessing" Content="CM + Processing" HorizontalAlignment="Left" Margin="297,47,0,0" VerticalAlignment="Top" Grid.Column="1" ToolTip="Tick this if you have a remote reporting server and want to setup this instance as a the reporting client" Click="cbCmAndprocessing_Click"/>
+				<ComboBox x:Name="cmbSitecoreVersion" HorizontalAlignment="Left" Margin="32,30,0,0" VerticalAlignment="Top" Width="120">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Vertical">
+								<TextBlock Text="{Binding Name}"></TextBlock>
+							</StackPanel>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
 			</Grid>
 		</Grid>
 		<Grid DockPanel.Dock="Bottom">
