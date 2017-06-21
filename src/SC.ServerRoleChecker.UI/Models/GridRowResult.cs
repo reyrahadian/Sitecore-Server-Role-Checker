@@ -2,7 +2,7 @@
 using System.Windows;
 using SC.ServerRoleChecker.Core.Enums;
 
-namespace SC.ServerRoleChecker.UI
+namespace SC.ServerRoleChecker.UI.Models
 {
     public class GridRowResult
     {
