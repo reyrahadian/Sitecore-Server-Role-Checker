@@ -9,6 +9,7 @@ Go to this [page](https://reyrahadian.github.io/Sitecore-Server-Role-Checker-Cli
 This tool will check the configuration files on the Sitecore website folder and let's you know if you've missed any configuration files to be enabled/disabled based on your selected server configuration roles.
 
 This tool currently support the following Sitecore version
+* 8.0 update 3
 * 8.1 update 3
 * 8.2 initial release
 * 8.2 update 1
