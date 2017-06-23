@@ -1,5 +1,8 @@
 # Sitecore Server Role Checker
 
+## How to install
+Go to this [page](https://reyrahadian.github.io/Sitecore-Server-Role-Checker-ClickOnce/index.html) and download the ClickOnce installer to get the latest version.
+
 # ![sitecore-server-role-checker](screenshots/application.PNG)
 
 ## Description
@@ -23,9 +26,6 @@ Sitecore has an excel spreadsheet for configuring a dedicated server role availa
 2. Choose your search provider (Lucene/Solr/Azure)
 3. Point to your website folder
 4. Check the result
-
-## How to run
-Click [here](https://reyrahadian.github.io/Sitecore-Server-Role-Checker-ClickOnce/index.html)
 
 ## Found an issue?
 Create an issue ticket in Github or submit a PR that contains the issue fix
